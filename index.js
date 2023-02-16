@@ -40,12 +40,29 @@ app.post('/login', function (req, res) {
   req.session.userId = id;
   res.send({ result: 'OK', message: 'Session updated' });
 });
+app.post('/', function (req, res) {
+
+  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  res.writeHead(404);
+  res.write("<p>Page Not found.Post</p>");
+
+});
+
+
+
+app.get('/', function (req, res) {
+  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  res.writeHead(404);
+  res.write("<p>Page Not found.Get</p>");
+});
+/*
 app.get("/", (req, res) => {
   //res.send("Hello world!  " + req.url);
   console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/index.html');
 
 });
+*/
 app.delete('/logout', function (request, response) {
   const ws = map.get(request.session.userId);
 
