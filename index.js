@@ -59,7 +59,34 @@ app.delete('/logout', function (request, response) {
 //
 // Create an HTTP server.
 //
+
 const server = http.createServer(app);
+///////////////////
+
+http.createServer(function (req, res) {
+  
+  // 200 is the status code which means
+  // All OK and the second argument is
+  // the object of response header.
+  res.writeHead(200, {'Content-Type': 'text/html'}); 
+    
+      // Write a response to the client
+      res.write('Congrats you have a created a web server');
+    
+      // End the response
+      res.end();
+    
+  }).listen(3000);
+
+
+
+  ////////////
+
+
+
+
+
+
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
