@@ -63,9 +63,37 @@ app.delete('/logout', function (request, response) {
 const server = http.createServer(app);
 
 app.get('/', function (req, res) {
-  console.log('get' + req + ' ' + res);
+  console.log('get' + req.url + ' ' + res);
   res.send('hello world')
-})
+  if (req.url.includes('favicon.ico')) {
+    sendFileContent(res, req.url.toString().substring(1), "image/ico");
+    }
+
+  else if ((req.url == '/') || (req.url.includes('.html'))) {//
+    let reqUrl = req.url;
+    if (req.url == '/') {
+        reqUrl = 'index.html';
+    }
+    const resolvedPath = pathmodule.resolve(baseDir + 'html/' + reqUrl); // resolve will resolve "../"
+    if (resolvedPath.startsWith(baseDir + 'html')) {
+        fs.readFile(resolvedPath,function(err,data){
+            if(err){
+                res.writeHead(404);
+                res.write("<p>Page Not found.</p>");
+            } else{
+                res.writeHead(200, {
+                    'Content-Type': 'text/html;charset=UTF8'
+                });
+                res.end(data);
+            }
+        });
+    }
+  }
+
+}
+//}
+
+);
 
 
 ///////////////////
