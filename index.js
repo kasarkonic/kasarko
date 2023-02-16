@@ -61,22 +61,14 @@ app.delete('/logout', function (request, response) {
 //
 
 const server = http.createServer(app);
-///////////////////
 
-http.createServer(function (req, res) {
-  
-  // 200 is the status code which means
-  // All OK and the second argument is
-  // the object of response header.
-  res.writeHead(200, {'Content-Type': 'text/html'}); 
-    
-      // Write a response to the client
-      res.write('Congrats you have a created a web server');
-    
-      // End the response
-      res.end();
-    
-  }).listen(3000);
+app.get('/', function (req, res) {
+  console.log('get' + req + ' ' + res);
+  res.send('hello world')
+})
+
+
+///////////////////
 
 
 
