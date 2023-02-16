@@ -258,11 +258,11 @@ const resulttxt = {
 //
 // Start the server.
 //
-/*
+
 server.listen(5500, function () {
   console.log('Listening on http://localhost:5500');
 });
-*/
+
 function findClients(id) {
   let ret = -1;
   console.log('findClients: ' + id);
