@@ -48,6 +48,8 @@ app.get('/', function(req, res) {
   //res.sendFile(__dirname + '/index.html');
 
   if(request.url === "/index"){
+      res.sendFile(__dirname + '/index.html');
+
       res.readFile("index.html", function (err, data) {
        response.writeHead(200, {'Content-Type': 'text/html'});
        response.write(data);
