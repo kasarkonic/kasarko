@@ -54,6 +54,7 @@ app.get('/', function(req, res) {
   
     if(request.url === "/gameapp.js"){
       res.sendFile(__dirname + '/gameapp.js');
+      res.sendFile(__dirname + '/images/fons4.png');
     };
 
 
