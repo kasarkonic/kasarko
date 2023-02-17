@@ -32,28 +32,55 @@ app.use(sessionParser);
 
 app.post('/login', function (req, res) {
   //
-  // "Log in" user and set userId to session.
-  //
-  const id = uuid.v4();
+  console.log("post Request " + req.url);
+  console.log("post Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
 
-  console.log('Updating HTTP session for user ${id}');
+  const id = uuid.v4();
+  console.log('Updating HTTP session for user ${'+ id + '}');
   req.session.userId = id;
   res.send({ result: 'OK', message: 'Session updated' });
 });
+
 app.get('/', function(req, res) {
+
+  console.log("get Request " + req.url);
   //console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/index.html');
 
+  if(request.url === "/index"){
+      res.readFile("index.html", function (err, data) {
+       response.writeHead(200, {'Content-Type': 'text/html'});
+       response.write(data);
+       response.end();
+    });
+  }
+
+
+
+
+
+
+
+
+
+/*
   switch (req.url) {
     case "/index.html":
       res.sendFile(__dirname + '/index.html');
         break
-    case "/fons4.png":
-      res.sendFile(__dirname + '/images/fons4.png');
-        break
+  //  case "/fons4.png":
+   //   res.sendFile(__dirname + '/images/fons4.png');
+   //     break
     default:
-        res.writeHead(404);
-        res.end(JSON.stringify({error:"Resource not found"}));
+    //    res.writeHead(404);
+   //     res.end(JSON.stringify({error:"Resource not found"}));
+}
+*/
+if (req.url.includes('.png')) {
+  sendFileContent(res, req.url.toString().substring(1), "image/");
+}
+if (req.url.includes('.jpg')) {
+  sendFileContent(res, req.url.toString().substring(1), "image/");
 }
 
 });
