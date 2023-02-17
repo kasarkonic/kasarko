@@ -48,6 +48,12 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/gameapp.js');
 
 });
+app.get('/gameapp.js', function(req, res) {
+  res.send("Hello world!  " + req.url);
+  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  res.sendFile(__dirname + '/gameapp.js');
+
+});
 app.delete('/logout', function (request, response) {
   const ws = map.get(request.session.userId);
 
