@@ -44,6 +44,8 @@ app.get('/', function(req, res) {
   res.send("Hello world!  " + req.url);
   console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/favicon.ico');
+  res.sendFile(__dirname + '/gameapp.js');
 
 });
 app.delete('/logout', function (request, response) {
