@@ -40,8 +40,8 @@ app.post('/login', function (req, res) {
   req.session.userId = id;
   res.send({ result: 'OK', message: 'Session updated' });
 });
-app.get("/", (req, res) => {
-  //res.send("Hello world!  " + req.url);
+app.get('/', function(req, res) {
+  res.send("Hello world!  " + req.url);
   console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/index.html');
 
