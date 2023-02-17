@@ -58,7 +58,7 @@ app.get('/', function(req, res) {
 
 
     if (req.url.includes('.png')) {
-      res.sendFile(__dirname + '/images' + req.url);
+      res.sendFile(__dirname + '/images/fons4.png');
       messageForAll(__dirname + '/images' + req.url + 'finish');
       console.log(__dirname + '/images' + req.url);
       //sendFileContent(res, req.url.toString().substring(1), "image/");
