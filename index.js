@@ -58,12 +58,13 @@ app.get('/', function(req, res) {
     };
 
 
-    //if (req.url.includes('.png')) {
-      if(request.url === "/images/fons4.png"){
-      res.sendFile(__dirname + '/images/fons4.png');
-      messageForAll(__dirname + '/images' + req.url + 'finish');
+    if (req.url.includes('.png')) {
+      sendFileContent(res, req.url.toString().substring(1), "images/");
+     // if(request.url === "/images/fons4.png"){
+     // res.sendFile(__dirname + '/images/fons4.png');
+     // messageForAll(__dirname + '/images' + req.url + 'finish');
       console.log(__dirname + '/images' + req.url);
-      //sendFileContent(res, req.url.toString().substring(1), "image/");
+      sendFileContent(res, req.url.toString().substring(1), "images/");
     }
     if (req.url.includes('.jpg')) {
       res.sendFile(__dirname + '/images' + req.url);
@@ -72,7 +73,7 @@ app.get('/', function(req, res) {
     
 
 
-
+    res.send({ result: 'OK', message: 'Session updated' });
 
 
 
