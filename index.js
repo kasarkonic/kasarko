@@ -56,17 +56,9 @@ app.get('/', function(req, res) {
         res.end(JSON.stringify({error:"Resource not found"}));
 }
 
-
-
-
-
-
 });
-app.get('/gameapp.js', function(req, res) {
- // console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
-  res.sendFile(__dirname + '/gameapp.js');
-});
-});
+
+
 app.get('/gameapp.js', function(req, res) {
  // console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/gameapp.js');
