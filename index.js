@@ -41,19 +41,40 @@ app.post('/login', function (req, res) {
   res.send({ result: 'OK', message: 'Session updated' });
 });
 app.get('/', function(req, res) {
-  res.send("Hello world!  " + req.url);
-  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  //console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/index.html');
-  res.sendFile(__dirname + '/favicon.ico');
-  res.sendFile(__dirname + '/gameapp.js');
+
+  switch (req.url) {
+    case "/index.html":
+      res.sendFile(__dirname + '/index.html');
+        break
+    case "/fons4.png":
+      res.sendFile(__dirname + '/images/fons4.png');
+        break
+    default:
+        res.writeHead(404);
+        res.end(JSON.stringify({error:"Resource not found"}));
+}
+
+
+
+
+
 
 });
 app.get('/gameapp.js', function(req, res) {
-  res.send("Hello world!  " + req.url);
-  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+ // console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/gameapp.js');
-
 });
+});
+app.get('/gameapp.js', function(req, res) {
+ // console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  res.sendFile(__dirname + '/gameapp.js');
+});
+
+
+
+
 app.delete('/logout', function (request, response) {
   const ws = map.get(request.session.userId);
 
