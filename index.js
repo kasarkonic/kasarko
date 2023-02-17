@@ -33,6 +33,7 @@ app.use(sessionParser);
 app.post('/login', function (req, res) {
   //
   console.log("post Request " + req.url);
+  console.log(__dirname + '/images' + req.url);
   console.log("post Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
 
   const id = uuid.v4();
@@ -57,12 +58,12 @@ app.get('/', function(req, res) {
 
 
     if (req.url.includes('.png')) {
-      res.sendFile(__dirname + '/images ' + request.url);
-      console.log(__dirname + '/images ' + request.url);
+      res.sendFile(__dirname + '/images' + req.url);
+      console.log(__dirname + '/images' + req.url);
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
     if (req.url.includes('.jpg')) {
-      res.sendFile(__dirname + '/images ' + request.url);
+      res.sendFile(__dirname + '/images' + req.url);
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
     
