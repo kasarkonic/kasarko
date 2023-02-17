@@ -56,6 +56,16 @@ app.get('/', function(req, res) {
     };
 
 
+    if (req.url.includes('.png')) {
+      res.sendFile(__dirname + '/images ' + request.url);
+      console.log(__dirname + '/images ' + request.url);
+      //sendFileContent(res, req.url.toString().substring(1), "image/");
+    }
+    if (req.url.includes('.jpg')) {
+      res.sendFile(__dirname + '/images ' + request.url);
+      //sendFileContent(res, req.url.toString().substring(1), "image/");
+    }
+    
 
 
 
@@ -76,12 +86,7 @@ app.get('/', function(req, res) {
    //     res.end(JSON.stringify({error:"Resource not found"}));
 }
 */
-if (req.url.includes('.png')) {
-  sendFileContent(res, req.url.toString().substring(1), "image/");
-}
-if (req.url.includes('.jpg')) {
-  sendFileContent(res, req.url.toString().substring(1), "image/");
-}
+
 
 });
 
