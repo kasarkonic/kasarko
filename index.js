@@ -62,7 +62,7 @@ app.get('/', function(req, res) {
   //    res.sendFile(__dirname + '/images/pngwing(R).png');
    // res.sendFile(__dirname +  request.url);
 
-    };
+    //};
 
     if (req.url.includes('.png')){
       res.sendFile(__dirname + '/images/pngwing(R).png');
