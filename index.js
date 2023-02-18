@@ -58,12 +58,17 @@ app.get('/', function(req, res) {
       res.sendFile(__dirname + '/gameapp.js');
       res.sendFile(__dirname + '/images/fons4.png');
     };
-    if(request.url === "/images/pngwing(R).png"){
-      res.sendFile(__dirname + '/images/pngwing(R).png');
-     // res.sendFile(__dirname + '/images/fons4.png');
-    };
+  //  if(request.url === "/images/pngwing(R).png"){
+  //    res.sendFile(__dirname + '/images/pngwing(R).png');
+   //  // res.sendFile(__dirname + '/images/fons4.png');
+  //  };
 
-   
+    if (request.url.includes('.png')){
+      res.sendFile(__dirname +  request.url);
+      //sendFileContent(res, req.url.toString().substring(1), "image/");
+
+
+    }
 
 /*
    // if (req.url.includes('.png')) {
