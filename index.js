@@ -4,7 +4,6 @@
 const session = require('express-session');
 const express = require('express');
 const http = require('http');
-const https = require('https');
 const uuid = require('uuid');
 
 const { WebSocketServer } = require('ws');
@@ -124,7 +123,7 @@ app.delete('/logout', function (request, response) {
 //
 // Create an HTTP server.
 //
-const server = https.createServer(app);
+const server = http.createServer(app);
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
