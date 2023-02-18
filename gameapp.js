@@ -1,3 +1,6 @@
+// vers 0.0.1
+
+
 (function () {
 
     const head = document.querySelector('#head');
@@ -272,19 +275,16 @@
     var leftValue = elStyle.getPropertyValue(topOrLeft).replace("px", "");
     element.style.left = (Number(leftValue) + distance) + "px";
    }
-
  }
 
-  function initPage(){
-   
+  function initPage(){ 
      fonsImg = document.createElement("img");
-     fonsImg.setAttribute('src', 'images/fons4.png');
+     fonsImg.setAttribute('src', 'images/fons41.png');
      fonsImg.setAttribute('height','100%');
      fonsImg.setAttribute('width', '100%');
-     //fonsImg.setAttribute('id', 'fonsImg');
 
      const fonsdiv = document.createElement("div"); 
-     //fonsdiv.setAttribute('id', 'fons4' );
+  
      fonsdiv.style.cssText = 'position:absolute;width:100%;height:96%;top:0%;left:0%;opacity:1;z-index:100;;';
 
      label_team_name = document.createElement("label");

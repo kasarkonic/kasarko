@@ -70,8 +70,8 @@ app.get('/', function(req, res) {
       res.sendFile(__dirname + '/images/pngwing(L).png');
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
-    if (req.url.includes('/images/fons4.png')){
-      res.sendFile(__dirname + '/images/fons4.png');
+    if (req.url.includes('/images/fons41.png')){
+      res.sendFile(__dirname + '/images/fons41.png');
     }
     if (req.url.includes('/images/fons3.jpg')){
       res.sendFile(__dirname + '/images/fons3.jpg');
