@@ -54,17 +54,16 @@ app.get('/', function(req, res) {
   
     if(request.url === "/gameapp.js"){
       res.sendFile(__dirname + '/gameapp.js');
-      res.sendFile(__dirname + '/images/fons4.png');
     };
 
 
-    if (req.url.includes('.png')) {
-      sendFileContent(res, req.url.toString().substring(1), "images/");
-     // if(request.url === "/images/fons4.png"){
-     // res.sendFile(__dirname + '/images/fons4.png');
+   // if (req.url.includes('.png')) {
+    //  sendFileContent(res, req.url.toString().substring(1), "images/");
+      if(request.url === "/images/fons4.png"){
+      res.sendFile(__dirname + '/images/fons4.png');
      // messageForAll(__dirname + '/images' + req.url + 'finish');
       console.log(__dirname + '/images' + req.url);
-      sendFileContent(res, req.url.toString().substring(1), "images/");
+     // sendFileContent(res, req.url.toString().substring(1), "images/");
     }
     if (req.url.includes('.jpg')) {
       res.sendFile(__dirname + '/images' + req.url);
