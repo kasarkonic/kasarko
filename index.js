@@ -56,7 +56,6 @@ app.get('/', function(req, res) {
   
     if(req.url === "/gameapp.js"){
       res.sendFile(__dirname + '/gameapp.js');
-      res.sendFile(__dirname + '/images/fons4.png');
     };
     //if(request.url === "/images/pngwing(R).png"){
   //    res.sendFile(__dirname + '/images/pngwing(R).png');
@@ -65,11 +64,14 @@ app.get('/', function(req, res) {
     //};
 
     if (req.url.includes('.png')){
-      res.sendFile(__dirname + '/images/pngwing(R).png');
-     // res.sendFile(__dirname +  request.url);
+      //res.sendFile(__dirname + '/images/pngwing(R).png');
+        res.sendFile(__dirname +  req.url);
       //sendFileContent(res, req.url.toString().substring(1), "image/");
-
-
+    }
+    if (req.url.includes('.jpg')){
+      //res.sendFile(__dirname + '/images/pngwing(R).png');
+        res.sendFile(__dirname +  req.url);
+      //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
 
 /*
