@@ -123,7 +123,7 @@ app.delete('/logout', function (request, response) {
 //
 // Create an HTTP server.
 //
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
@@ -136,6 +136,7 @@ setInterval(timerFunction, 1000);
 // Create a WebSocket server completely detached from the HTTP server.
 //
 const wss = new WebSocketServer({ clientTracking: false, noServer: true });
+
 
 server.on('upgrade', function (request, socket, head) {
   console.log('Parsing session from request...');
