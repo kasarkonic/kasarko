@@ -82,6 +82,9 @@ app.get('/', function(req, res) {
     if (req.url.includes('/images/new.png')){
       res.sendFile(__dirname + '/images/new.png');
     }
+    if (req.url.includes('/images/mix.png')){
+      res.sendFile(__dirname + '/images/mix.png');
+    }
 
 
 
