@@ -97,40 +97,6 @@ app.get('/', function(req, res) {
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
 
-/*
-   // if (req.url.includes('.png')) {
-    //  sendFileContent(res, req.url.toString().substring(1), "images/");
-      if(request.url === "/images/fons4.png"){
-      res.sendFile(__dirname + '/images/fons4.png');
-     // messageForAll(__dirname + '/images' + req.url + 'finish');
-      console.log(__dirname + '/images' + req.url);
-     // sendFileContent(res, req.url.toString().substring(1), "images/");
-    }
-    if (req.url.includes('.jpg')) {
-      res.sendFile(__dirname + '/images' + req.url);
-      //sendFileContent(res, req.url.toString().substring(1), "image/");
-    }
-    
-
-
-    res.send({ result: 'OK', message: 'Session updated' });
-
-*/
-
-
-/*
-  switch (req.url) {
-    case "/index.html":
-      res.sendFile(__dirname + '/index.html');
-        break
-  //  case "/fons4.png":
-   //   res.sendFile(__dirname + '/images/fons4.png');
-   //     break
-    default:
-    //    res.writeHead(404);
-   //     res.end(JSON.stringify({error:"Resource not found"}));
-}
-*/
 
 
 });
@@ -145,11 +111,11 @@ app.get('/gameapp.js', function(req, res) {
 
 
 app.delete('/logout', function (request, response) {
-  const ws = map.get(request.session.userId);
+  const wss = map.get(request.session.userId);
 
   console.log('Destroying session');
   request.session.destroy(function () {
-    if (ws) ws.close();
+    if (wss) wss.close();
     response.send({ result: 'OK', message: 'Session destroyed' });
   });
 });
@@ -183,17 +149,17 @@ server.on('upgrade', function (request, socket, head) {
 
     console.log('Session is parsed!');
 
-    wss.handleUpgrade(request, socket, head, function (ws) {
-      wss.emit('connection', ws, request);
+    wss.handleUpgrade(request, socket, head, function (wss) {
+      wss.emit('connection', wss, request);
       console.log('emit connection');
     });
   });
 });
 
-wss.on('connection', function (ws, request) {
+wss.on('connection', function (wss, request) {
 
   const userId = request.session.userId;
-  map.set(userId, ws);
+  map.set(userId, wss);
   //console.log(ws + map.get(userId));
 
   ws.on('message', function (message) {
@@ -286,37 +252,25 @@ wss.on('connection', function (ws, request) {
 
 
         case 'DEVELOP':
-
-        messageForAll(strObj.teamName,'MEMB', ncount);
-//AAA
-
-
-
-const resulttxt = {
-  cmd:'DEVELOP',
-  id:'userId',
-  dataArray_length:dataArray.length,
-  map_length:map.length,
-
-
-  quest_kad:kad,
-  quest_ar_ko:ar_ko,
-  quest_kur:kur,
-  quest_ko_dara:ko_dara,
-  quest_kapec:kapec,
-  message:mes,
-  time:''};
-  let jsonObj = JSON.stringify(resulttxt);
-
-  map.get(userId).send(jsonObj);
-
-
+          messageForAll(strObj.teamName,'MEMB', ncount);
+          const resulttxt = {
+            cmd:'DEVELOP',
+            id:'userId',
+            dataArray_length:dataArray.length,
+            map_length:map.length,
+            quest_kad:kad,
+            quest_ar_ko:ar_ko,
+            quest_kur:kur,
+            quest_ko_dara:ko_dara,
+            quest_kapec:kapec,
+            message:mes,
+            time:''};
+          let jsonObj = JSON.stringify(resulttxt);
+          map.get(userId).send(jsonObj);
         break
-
       default:
         console.log("default --------------------");
     }
-
 
     //const timeSinc = new Date();
     //dArray[7] = timeSinc.getTime();
@@ -325,7 +279,7 @@ const resulttxt = {
      //ws.send('MES,You have ' + ncount + ' teammates.');
   });
 
-  ws.on('close', function () {
+  wss.on('close', function () {
     console.log('userId:' + userId + ' ' +  dataArray.length );
 
     map.delete(userId);
