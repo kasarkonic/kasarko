@@ -1,3 +1,5 @@
+//A maximum length of 52 characters  !!!!!!!!!!!!!!!
+
 'use strict';
 const session = require('express-session');
 const express = require('express');
@@ -54,9 +56,16 @@ app.get('/', function(req, res) {
   
     if(request.url === "/gameapp.js"){
       res.sendFile(__dirname + '/gameapp.js');
+      res.sendFile(__dirname + '/images/fons4.png');
+    };
+    if(request.url === "/images/pngwing(R).png"){
+      res.sendFile(__dirname + '/images/pngwing(R).png');
+     // res.sendFile(__dirname + '/images/fons4.png');
     };
 
+   
 
+/*
    // if (req.url.includes('.png')) {
     //  sendFileContent(res, req.url.toString().substring(1), "images/");
       if(request.url === "/images/fons4.png"){
@@ -74,7 +83,7 @@ app.get('/', function(req, res) {
 
     res.send({ result: 'OK', message: 'Session updated' });
 
-
+*/
 
 
 /*
