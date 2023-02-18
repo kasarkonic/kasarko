@@ -63,16 +63,23 @@ app.get('/', function(req, res) {
 
     //};
 
-    if (req.url.includes('.png')){
+    if (req.url.includes('/images/pngwing(R).png')){
 
       //res.sendFile(__dirname + '/images' + req.url);
-      //res.sendFile(__dirname + '/images/pngwing(R).png');
-      //res.sendFile(__dirname + '/images/pngwing(L).png');
+      res.sendFile(__dirname + '/images/pngwing(R).png');
       //res.sendFile(__dirname + '/images/fons4.png');
-
-        res.sendFile(req.url);
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
+    if (req.url.includes('/images/pngwing(L).png')){
+      res.sendFile(__dirname + '/images/pngwing(L).png');
+      //sendFileContent(res, req.url.toString().substring(1), "image/");
+    }
+    if (req.url.includes('fons4.png')){
+      //res.sendFile(__dirname + '/images/fons4.png');
+    }
+
+
+
 
     //   ???????????????? res.sendFile(__dirname + '/images' + req.url);
 
