@@ -488,7 +488,15 @@
       ws.onerror = ws.onopen = ws.onclose = null;
       ws.close();
     }
+
+    //const serverAddres = "wss://kasarko.glitch.me/";
+    //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
+    //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
+      
     ws = new WebSocket(`ws://${location.host}`);
+  
+    
+
 
     ws.onmessage = function(event) {
       //alert(`Rec. msg from server ${event.data}`);
@@ -576,7 +584,7 @@
 
   function sendMessToServer(mes) {
     if (!ws) {
-      //showMessage('No WebSocket connection');
+      showMessage('No WebSocket connection');
         return;
     }
     ws.send(mes);

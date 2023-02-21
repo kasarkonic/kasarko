@@ -1,22 +1,25 @@
-{"name":"Demo",
-"version":"1.0.0",
-"author":"",
-"main": "main.js",
-"description":"demo project.",
-"license":"ISC",
-"scripts":{
-	"start": "node server.js"
+{
+	"name": "kas_ar_ko",
+	"version": "1.0.0",
+	"author": "",
+	"main": "server.js",
+	"description": "demo project.",
+	"license": "MIT",
+	"scripts": {
+	  "start": "node server.js",
+	  "lite": "lite-server --port 3000"
 	},
-"engines": {
-    "node": "14.x"
-  },
-"devDependencies":{
-	"lite-server":"^1.3.1"
+	"engines": {
+	  "node": "18.13.0"
 	},
-"dependencies":{
-	"express-session":"^1.17.3",
-	"express":"^4.18.2",
-	"uuid":"^9.0.0",
-	"websocket":"^1.0.34"
+	"devDependencies": {
+	  "lite-server": "^1.3.4"
+	},
+	"dependencies": {
+	  "express-session": "^1.17.3",
+	  "express": "^4.17.3",
+	  "ws": "^7.4.3",
+	  "websocket": "^1.0.34",
+	  "uuid":"^9.0.0"
 	}
-}
+  }
