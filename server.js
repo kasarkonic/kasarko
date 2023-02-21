@@ -312,8 +312,8 @@ wss.on('connection', function (ws, request) {
 // Start the server.
 //
 
-server.listen(5500, function () {
-  console.log('Listening on http://localhost:5500');
+server.listen(3000, function () {
+  console.log('Listening on http://localhost:3000');
 });
 
 function findClients(id) {
