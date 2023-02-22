@@ -18,7 +18,7 @@
 	"dependencies": {
 	  "express-session": "^1.17.3",
 	  "express": "^4.17.3",
-	  "ws": "^7.4.3",
+	  "ws": "^8.2.3",
 	  "websocket": "^1.0.34",
 	  "uuid":"^9.0.0"
 	}

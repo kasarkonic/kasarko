@@ -85,7 +85,7 @@ app.get('/', function(req, res) {
     if (req.url.includes('/images/mix.png')){
       res.sendFile(__dirname + '/images/mix.png');
     }
-    if (req.url.includes('/images/favicon.ico')){
+    if (req.url.includes('/favicon.ico')){
       res.sendFile(__dirname + '/images/favicon.ico');
     }
 
@@ -137,8 +137,9 @@ setInterval(timerFunction, 1000);
 //
 // Create a WebSocket server completely detached from the HTTP server.
 //
-const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-
+//const { WebSocketServer } = require('../..');   ????
+//const wss = new WebSocketServer({ clientTracking: false, noServer: true });
+const wss = new WebSocketServer({ server });
 
 server.on('upgrade', function (request, socket, head) {
   console.log('Parsing session from request...');
