@@ -479,6 +479,7 @@
     //.then(showMessage)
     .then(createSocket)
     .catch(function (err) {
+      console.log(err.message);
       showMessage(err.message);
     });
  }
