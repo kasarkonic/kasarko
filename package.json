@@ -9,6 +9,10 @@
 	  "start": "node server.js",
 	  "lite": "lite-server --port 3000"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kasarkonic/kasarko.git"
+	},
 	"engines": {
 	  "node": "18.13.0"
 	},
