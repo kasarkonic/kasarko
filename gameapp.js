@@ -507,9 +507,9 @@
 
   //ws = new WebSocket(`ws://upbeat-sunrise-cinema.glitch.me`);
   
-  const socket = new WebSocket('ws://localhost:8080');
+ // const socket = new WebSocket('ws://localhost:8080');
   
-  ws = new WebSocket( 'wss://upbeat-sunrise-cinema.glitch.me');
+  ws = new WebSocket( 'ws://upbeat-sunrise-cinema.glitch.me');
                      
                      
   
