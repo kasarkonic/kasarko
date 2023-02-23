@@ -486,6 +486,7 @@
 
   function createSocket(){
     if (ws) {
+      console.log('ws opn yet !!! ');
       ws.onerror = ws.onopen = ws.onclose = null;
       console.log('ws.close() ');
       ws.close();
@@ -500,19 +501,24 @@
     
 
    // ws = new WebSocket(`ws://${location.host}`);
-    //const serverAddress = 'ws://${location.host}';
+     //const serverAddress = 'ws://${location.host}';
   //const serverAddress = 'wss://kasarko.glitch.me';
-<<<<<<< HEAD
-    const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
-=======
-    const serverAddress = 'wss://rigorous-tough-grasshopper.glitch.me';
->>>>>>> e60449a90dfd57cc6a8edbacb2dfecf1d12833ba
+  const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
 
-    const ws = new WebSocket(serverAddress, {
-        headers: {
-            "user-agent": "Mozilla"
-        }
-    });
+  //ws = new WebSocket(`ws://upbeat-sunrise-cinema.glitch.me`);
+  
+  const socket = new WebSocket('ws://localhost:8080');
+  
+  ws = new WebSocket( 'wss://upbeat-sunrise-cinema.glitch.me');
+                     
+                     
+  
+//    const ws = new WebSocket(serverAddress, {
+     // headers: {
+    //      "user-agent": "Mozilla"
+    //  }
+//   });
+
 
 
 
