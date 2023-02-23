@@ -486,11 +486,36 @@
   function createSocket(){
     if (ws) {
       ws.onerror = ws.onopen = ws.onclose = null;
+      console.log('ws.close() ');
       ws.close();
+      
+
     }
-    ws = new WebSocket(`ws://${location.host}`);
+
+    //const serverAddres = "wss://kasarko.glitch.me/";
+    //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
+    //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
+     
+    
+
+   // ws = new WebSocket(`ws://${location.host}`);
+    //const serverAddress = 'ws://${location.host}';
+  //const serverAddress = 'wss://kasarko.glitch.me';
+    const serverAddress = 'wss://rigorous-tough-grasshopper.glitch.me';
+
+    const ws = new WebSocket(serverAddress, {
+        headers: {
+            "user-agent": "Mozilla"
+        }
+    });
+
+
+
+    
+
 
     ws.onmessage = function(event) {
+      console.log(`Rec. msg from server ${event.data}`);
       //alert(`Rec. msg from server ${event.data}`);
       ////--------------------------------------------------------------------------------------------------------------------
       const strObj = JSON.parse(event.data);
@@ -576,7 +601,7 @@
 
   function sendMessToServer(mes) {
     if (!ws) {
-      //showMessage('No WebSocket connection');
+      showMessage('No WebSocket connection');
         return;
     }
     ws.send(mes);

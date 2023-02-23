@@ -1,11 +1,11 @@
 {
    "version": 2,
-   "name": "GAME",
+   "name": "kas_ar_ko",
    "public": true,
    "builds": [
-      { "src": "index.js", "use": "@vercel/node" }
+      { "src": "server.js", "use": "@vercel/node" }
    ],
    "routes": [
-      { "src": "/(.*)", "dest": "/index.js" }
+      { "src": "/(.*)", "dest": "/server.js" }
    ]
 }
