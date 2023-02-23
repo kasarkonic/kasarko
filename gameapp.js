@@ -501,7 +501,7 @@
    // ws = new WebSocket(`ws://${location.host}`);
     //const serverAddress = 'ws://${location.host}';
   //const serverAddress = 'wss://kasarko.glitch.me';
-    const serverAddress = 'wss://rigorous-tough-grasshopper.glitch.me';
+    const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
 
     const ws = new WebSocket(serverAddress, {
         headers: {
