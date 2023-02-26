@@ -3,7 +3,7 @@
 'use strict';
 const session = require('express-session');
 const express = require('express');
-const http = require('http');
+const https = require('https');
 const uuid = require('uuid');
 
 const { WebSocketServer } = require('ws');
@@ -43,7 +43,7 @@ app.post('/login', function (req, res) {
   //console.log("post Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
 
   const id = uuid.v4();
-  console.log('Updating HTTP session for user ${'+ id + '}');
+  console.log('Updating HTTPS session for user ${'+ id + '}');
   req.session.userId = id;
   res.send({ result: 'OK', message: 'Session updated' });
 });
@@ -129,7 +129,7 @@ app.delete('/logout', function (request, response) {
 //
 // Create an HTTP server.
 //
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
@@ -150,7 +150,7 @@ server.on('upgrade', function (request, socket, head) {
 
   sessionParser(request, {}, () => {
     if (!request.session.userId) {
-      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+      socket.write('HTTPS/1.1 401 Unauthorized\r\n\r\n');
       socket.destroy();
       return;
     }
@@ -320,7 +320,7 @@ wss.on('connection', function (ws, request) {
 //
 
 server.listen(8080, function () {
-  console.log('Listening on http://localhost:8080');
+  console.log('Listening on https://localhost:8080');
 });
 
 function findClients(id) {
