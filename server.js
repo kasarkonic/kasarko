@@ -24,7 +24,7 @@ const sessionParser = session({
   saveUninitialized: false,
   secret: '$eCuRiTy',
   resave: false
-});
+});req
 
 //
 // Serve static files from the 'public' folder.
@@ -136,7 +136,7 @@ const server = http.createServer(app);
 
 console.log('////--------------------------------------');
 //setTimeout(timerFunction, 1000);
-setInterval(timerFunction, 1000);
+//setInterval(timerFunction, 1000);  test
 
 //
 // Create a WebSocket server completely detached from the HTTP server.
