@@ -503,8 +503,8 @@
    // ws = new WebSocket(`ws://${location.host}`);
      //const serverAddress = 'ws://${location.host}';
   //const serverAddress = 'wss://kasarko.glitch.me';
+  //const serverAddress = 'wss://https://catkin-feather-hyacinth.glitch.me/';
   const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
-
   //ws = new WebSocket(`ws://upbeat-sunrise-cinema.glitch.me`);
   
  // const socket = new WebSocket('ws://localhost:8080');
