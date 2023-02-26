@@ -143,7 +143,12 @@ setInterval(timerFunction, 1000);
 //
 //const { WebSocketServer } = require('../..');   ????
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-const wss = new WebSocketServer({ server });
+
+
+//const wss = new WebSocketServer({ server });
+
+const PORT = 8080;
+const wss = new WebSocketServer({ port: PORT });
 
 server.on('upgrade', function (request, socket, head) {
   console.log('Parsing session from request...');
