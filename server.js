@@ -150,7 +150,7 @@ setInterval(timerFunction, 1000);
 
 //const wss = new WebSocketServer({ port: PORT });
 
-const wss = new WebSocket.Server({ server });
+const wss = new WebSocketServer({ server });
 
 server.on('upgrade', function (request, socket, head) {
   console.log('Parsing session from request...');

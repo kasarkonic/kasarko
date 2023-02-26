@@ -426,7 +426,7 @@
      input_btn_right.style.cssText ='position:fixed;top:18%;left:64%;width:7%;height:auto;opacity:1;';
 
      label_result = document.createElement("label");
-     label_result.innerHTML = "Result ";  
+     label_result.innerHTML = "";  
      label_result.style.cssText ='position:fixed;top:28%;left:24%;width:52%;height:58%;opacity:1;font-size:2vw;;';//background:#F00;
 
 
@@ -509,7 +509,7 @@
   
  // const socket = new WebSocket('ws://localhost:8080');
   
-  ws = new WebSocket( 'ws://upbeat-sunrise-cinema.glitch.me');
+  ws = new WebSocket( 'wss://upbeat-sunrise-cinema.glitch.me');
                      
                      
   
