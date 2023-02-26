@@ -32,6 +32,10 @@ const sessionParser = session({
 app.use(express.static(__dirname));
 app.use(sessionParser);
 
+app.all('/', (req, res) => {
+  console.log("ws rec " + req + '  ' + res );
+})
+
 app.post('/login', function (req, res) {
   
   console.log("post Request " + req.url);
