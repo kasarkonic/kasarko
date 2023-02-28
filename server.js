@@ -24,13 +24,17 @@ const sessionParser = session({
   saveUninitialized: false,
   secret: '$eCuRiTy',
   resave: false
-});
+});req
 
 //
 // Serve static files from the 'public' folder.
 //
 app.use(express.static(__dirname));
 app.use(sessionParser);
+
+app.all('/', (req, res) => {
+  console.log("ws rec " + req + '  ' + res );
+})
 
 app.post('/login', function (req, res) {
   
@@ -132,13 +136,20 @@ const server = http.createServer(app);
 
 console.log('////--------------------------------------');
 //setTimeout(timerFunction, 1000);
-setInterval(timerFunction, 1000);
+//setInterval(timerFunction, 1000);  test
 
 //
 // Create a WebSocket server completely detached from the HTTP server.
 //
 //const { WebSocketServer } = require('../..');   ????
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
+
+
+//const wss = new WebSocketServer({ server });
+
+
+//const wss = new WebSocketServer({ port: PORT });
+
 const wss = new WebSocketServer({ server });
 
 server.on('upgrade', function (request, socket, head) {
@@ -233,7 +244,7 @@ wss.on('connection', function (ws, request) {
         if(answers == teammateCnt){  // receive from all players
           messageForAll(strObj.teamName,'MES','All player finish');
 
-//send array !!!
+          //send array !!!
         sendDataArrayToClient(strObj.teamName);
 
         }
@@ -315,8 +326,8 @@ wss.on('connection', function (ws, request) {
 // Start the server.
 //
 
-server.listen(8080, function () {
-  console.log('Listening on http://localhost:8080');
+server.listen(3000, function () {
+  console.log('Listening on http://localhost:3000');
 });
 
 function findClients(id) {
