@@ -502,19 +502,16 @@
   //const serverAddress = 'wss://kasarko.glitch.me';
     const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
 
-    const ws = new WebSocket(serverAddress, {
-        headers: {
-            "user-agent": "Mozilla"
-        }
-        return new Promise((resolve, reject) => {
-          const timer = setInterval(() => {
-              if(ws.readyState === 1) {
-                  clearInterval(timer);
-                  resolve(ws);
-              }
-          }, 10);
-      }); 
-    });
+    const ws = new WebSocket(serverAddress// {
+       // headers: {
+       //     "user-agent": "Mozilla"
+        //}
+        );
+        return  ws;
+
+                  //resolve(ws);
+ 
+    };
 
 
 
