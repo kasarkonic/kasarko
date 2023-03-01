@@ -66,7 +66,7 @@
     //myInterval1 = setTimeout(timeoutFunction, 2000);
 
     var timcount = 0;
-    myInterval = setInterval(intervalFunction, 10);
+    let myInterval = setInterval(intervalFunction, 10);
 
 
   function createteam(){
