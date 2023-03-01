@@ -6,7 +6,8 @@ const express = require('express');
 const http = require('http');
 const uuid = require('uuid');
 
-const { WebSocketServer } = require('ws');
+//const { WebSocketServer } = require('ws');
+const WebSocket = require('ws');
 const app = express();
 
 
@@ -131,8 +132,8 @@ const server = http.createServer(app);
 //
 // Create a WebSocket server completely detached from the HTTP server.
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-const wss = new WebSocketServer({ server });
-
+//const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ port: 7071 });
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
