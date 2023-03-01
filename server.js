@@ -133,7 +133,7 @@ const server = http.createServer(app);
 // Create a WebSocket server completely detached from the HTTP server.
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
 //const wss = new WebSocket.Server({ server });
-const wss = new WebSocket.Server({ port: 7071 });
+const wss = new WebSocket.Server({ port: 5000 });
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
@@ -162,7 +162,26 @@ server.on('upgrade', function (request, socket, head) {
   });
 });
 
-wss.on('connection', function (ws, request) {
+wss.on('connection', function (socket) {
+  // Some feedback on the console
+  console.log("A client just connected");
+
+  // Attach some behavior to the incoming socket
+  socket.on('message', function (msg) {
+      console.log("Received message from client: "  + msg);
+      // socket.send("Take this back: " + msg);
+
+      // Broadcast that message to all connected clients
+      ws.clients.forEach(function (client) {
+          client.send(msg);
+      });
+
+  });
+
+});
+
+
+wss.on1('connection', function (ws, request) {
 
   const userId = request.session.userId;
   map.set(userId, ws);
