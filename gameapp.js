@@ -662,6 +662,8 @@
           document.cookie = team + "; max-age=2592000";  // 60*60*24*30= (s)
          };
 
+         
+
  /*
   submitname.onclick = function () {
      //   login();
