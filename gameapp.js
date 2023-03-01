@@ -9,7 +9,12 @@
     let fonsImg;
     let label_quest_kas;
     let input_btn_submTeam;
-    
+    let label_quest_kad;
+    let label_quest_ar_ko;
+    let label_quest_kur;
+    let label_quest_ko_dara;
+    let label_quest_kapec;
+
     let input_team_name;
     let input_quest_kas;
     let input_quest_kad;
