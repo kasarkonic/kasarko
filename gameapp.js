@@ -7,8 +7,9 @@
     const head = document.querySelector('#head');
     const body = document.querySelector('#body');
     let fonsImg;
-    let label_quest_kas;
     let input_btn_submTeam;
+    let input_btn_toServer;
+    let label_quest_kas;
     let label_quest_kad;
     let label_quest_ar_ko;
     let label_quest_kur;
