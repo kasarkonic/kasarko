@@ -24,17 +24,13 @@ const sessionParser = session({
   saveUninitialized: false,
   secret: '$eCuRiTy',
   resave: false
-});req
+});
 
 //
 // Serve static files from the 'public' folder.
 //
 app.use(express.static(__dirname));
 app.use(sessionParser);
-
-app.all('/', (req, res) => {
-  console.log("ws rec " + req + '  ' + res );
-})
 
 app.post('/login', function (req, res) {
   
@@ -46,6 +42,8 @@ app.post('/login', function (req, res) {
   console.log('Updating HTTP session for user ${'+ id + '}');
   req.session.userId = id;
   res.send({ result: 'OK', message: 'Session updated' });
+
+  
 });
 
 app.get('/', function(req, res) {
@@ -130,27 +128,19 @@ app.delete('/logout', function (request, response) {
 // Create an HTTP server.
 //
 const server = http.createServer(app);
+//
+// Create a WebSocket server completely detached from the HTTP server.
+//const wss = new WebSocketServer({ clientTracking: false, noServer: true });
+const wss = new WebSocketServer({ server });
+
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
 
 console.log('////--------------------------------------');
 //setTimeout(timerFunction, 1000);
-//setInterval(timerFunction, 1000);  test
+setInterval(timerFunction, 1000);
 
-//
-// Create a WebSocket server completely detached from the HTTP server.
-//
-//const { WebSocketServer } = require('../..');   ????
-//const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-
-
-//const wss = new WebSocketServer({ server });
-
-
-//const wss = new WebSocketServer({ port: PORT });
-
-const wss = new WebSocketServer({ server });
 
 server.on('upgrade', function (request, socket, head) {
   console.log('Parsing session from request...');
@@ -164,8 +154,8 @@ server.on('upgrade', function (request, socket, head) {
 
     console.log('Session is parsed!');
 
-    wss.handleUpgrade(request, socket, head, function (ws) {
-      wss.emit('connection', ws, request);
+    wss.handleUpgrade(request, socket, head, function (wss) {
+      wss.emit('connection', wss, request);
       console.log('emit connection');
     });
   });
@@ -175,7 +165,7 @@ wss.on('connection', function (ws, request) {
 
   const userId = request.session.userId;
   map.set(userId, ws);
-  //console.log(ws + map.get(userId));
+  console.log(ws + map.get(userId));
 
   ws.on('message', function (message) {
     console.log("-------------------- New message --------------------");
@@ -244,7 +234,7 @@ wss.on('connection', function (ws, request) {
         if(answers == teammateCnt){  // receive from all players
           messageForAll(strObj.teamName,'MES','All player finish');
 
-          //send array !!!
+//send array !!!
         sendDataArrayToClient(strObj.teamName);
 
         }
@@ -326,8 +316,8 @@ wss.on('connection', function (ws, request) {
 // Start the server.
 //
 
-server.listen(3000, function () {
-  console.log('Listening on http://localhost:3000');
+server.listen(8080, function () {
+  console.log('Listening on http://localhost:8080');
 });
 
 function findClients(id) {

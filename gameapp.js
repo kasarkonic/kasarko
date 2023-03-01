@@ -426,7 +426,7 @@
      input_btn_right.style.cssText ='position:fixed;top:18%;left:64%;width:7%;height:auto;opacity:1;';
 
      label_result = document.createElement("label");
-     label_result.innerHTML = "";  
+     label_result.innerHTML = "Result ";  
      label_result.style.cssText ='position:fixed;top:28%;left:24%;width:52%;height:58%;opacity:1;font-size:2vw;;';//background:#F00;
 
 
@@ -476,17 +476,15 @@
   function login(){
     fetch('/login', { method: 'POST', credentials: 'same-origin' })
     .then(handleResponse)
-    //.then(showMessage)
+    .then(showMessage)
     .then(createSocket)
     .catch(function (err) {
-      console.log(err.message);
       showMessage(err.message);
     });
  }
 
   function createSocket(){
     if (ws) {
-      console.log('ws opn yet !!! ');
       ws.onerror = ws.onopen = ws.onclose = null;
       console.log('ws.close() ');
       ws.close();
@@ -501,25 +499,15 @@
     
 
    // ws = new WebSocket(`ws://${location.host}`);
-     //const serverAddress = 'ws://${location.host}';
+    //const serverAddress = 'ws://${location.host}';
   //const serverAddress = 'wss://kasarko.glitch.me';
-  //const serverAddress = 'wss://https://catkin-feather-hyacinth.glitch.me/';
-  const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
-  //ws = new WebSocket(`ws://upbeat-sunrise-cinema.glitch.me`);
-  
- // const socket = new WebSocket('ws://localhost:8080');
-  
-  ws = new WebSocket( 'wss://upbeat-sunrise-cinema.glitch.me');
-                     
-                     
-  
-//    const ws = new WebSocket(serverAddress, {
-     // headers: {
-    //      "user-agent": "Mozilla"
-    //  }
-//   });
+    const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
 
-
+    const ws = new WebSocket(serverAddress, {
+        headers: {
+            "user-agent": "Mozilla"
+        }
+    });
 
 
 
