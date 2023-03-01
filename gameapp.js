@@ -8,6 +8,8 @@
     const body = document.querySelector('#body');
     let fonsImg;
     let label_quest_kas;
+    let input_btn_submTeam;
+    
     let input_team_name;
     let input_quest_kas;
     let input_quest_kad;
