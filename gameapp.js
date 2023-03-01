@@ -3,7 +3,7 @@
 
 (function () {
 
-  const ws = createSocket();
+    const ws = createSocket();
     const head = document.querySelector('#head');
     const body = document.querySelector('#body');
 
@@ -662,7 +662,7 @@
           document.cookie = team + "; max-age=2592000";  // 60*60*24*30= (s)
          };
 
-         
+
 
  /*
   submitname.onclick = function () {
