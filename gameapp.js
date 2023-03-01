@@ -502,16 +502,13 @@
   //const serverAddress = 'wss://kasarko.glitch.me';
     const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
 
-    const ws = new WebSocket(serverAddress// {
-       // headers: {
-       //     "user-agent": "Mozilla"
-        //}
-        );
+    const ws = new WebSocket(serverAddress);
+  
+       // headers: {"user-agent": "Mozilla"}
         return  ws;
-
                   //resolve(ws);
  
-    };
+    }
 
 
 
@@ -562,8 +559,6 @@
     }
 
 
-
-
     if(strObj.cmd.localeCompare('RESULT') == 0){
      // showMessage('RESULT msg -> ' + strObj.message);
      //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
@@ -586,21 +581,21 @@
       allAnswArray.push(strObjArray);
 
         displayResult(pageNr);
-      }
-    };
+      //}
+    }
 
     ws.onerror = function () {
       showMessage('WebSocket error');
-    };
+    }
 
     ws.onopen = function () {
       sendMessToServer(createJson('LOG','WebSocket connection established'));
-    };
+    }
 
     ws.onclose = function () {
       showMessage('WebSocket connection closed');
       ws = null; 
-    };
+    }
   }
 
   function sendMessToServer(mes) {
