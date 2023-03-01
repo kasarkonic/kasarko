@@ -26,7 +26,7 @@
     const dataJson = JSON;
     var team;
     let menb;
-    let ws;
+ 
     let jsonObj;
     let allAnswArray = new Array();
     let pageNr = 0;
