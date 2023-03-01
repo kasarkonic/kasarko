@@ -6,7 +6,7 @@
     const ws = createSocket();
     const head = document.querySelector('#head');
     const body = document.querySelector('#body');
-
+    let fonsImg;
     let input_team_name;
     let input_quest_kas;
     let input_quest_kad;
