@@ -3,6 +3,7 @@
 
 (function () {
 
+  const ws = createSocket();
     const head = document.querySelector('#head');
     const body = document.querySelector('#body');
 
@@ -477,20 +478,18 @@
     fetch('/login', { method: 'POST', credentials: 'same-origin' })
     .then(handleResponse)
     .then(showMessage)
-    .then(createSocket)
+    //.then(createSocket)
     .catch(function (err) {
       showMessage(err.message);
     });
  }
 
   function createSocket(){
-    if (ws) {
-      ws.onerror = ws.onopen = ws.onclose = null;
-      console.log('ws.close() ');
-      ws.close();
-      
-
-    }
+   // if (ws) {
+   //   ws.onerror = ws.onopen = ws.onclose = null;
+   //   console.log('ws.close() ');
+  //    ws.close();
+  //  }
 
     //const serverAddres = "wss://kasarko.glitch.me/";
     //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
@@ -507,6 +506,14 @@
         headers: {
             "user-agent": "Mozilla"
         }
+        return new Promise((resolve, reject) => {
+          const timer = setInterval(() => {
+              if(ws.readyState === 1) {
+                  clearInterval(timer);
+                  resolve(ws);
+              }
+          }, 10);
+      }); 
     });
 
 
