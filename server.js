@@ -79,7 +79,7 @@ app.post('/login', function (req, res) {
 
 app.get('/', function(req, res) {
 
-  console.log("get Request " + req.url);
+  //console.log("get Request " + req.url);
   console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
   res.sendFile(__dirname + '/index.html');
 
@@ -131,6 +131,8 @@ app.get('/', function(req, res) {
        // res.sendFile(__dirname +  req.url);
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
+
+    res.send({ result: "OK", message: "Session updated", id });
 });
 
 /*

@@ -15,12 +15,10 @@
 	"engines": {
 	  "node": "12.x"
 	},
-	"devDependencies": {
-	  "lite-server": "^1.3.4"
-	},
 	"dependencies": {
-	  "express-session": "^1.17.3",
+	  "express-session": "^1.16.2",
 	  "express": "^4.17.3",
+	  "https": "^1.0.0",
 	  "ws": "^8.2.3",
 	  "websocket": "^1.0.34",
 	  "uuid":"^9.0.0"
