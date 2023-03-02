@@ -133,7 +133,7 @@ const server = http.createServer(app);
 // Create a WebSocket server completely detached from the HTTP server.
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
 //const wss = new WebSocket.Server({ server });
-const wss = new WebSocket.Server({ port: 7071 });
+const wss = new WebSocket.Server({ port: 5000 });
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
@@ -168,6 +168,26 @@ wss.on('connection', function (ws, request) {
   map.set(userId, ws);
   console.log(ws + map.get(userId));
 
+  wsServer.on('connection', function (socket) {
+    // Some feedback on the console
+    console.log("A client just connected");
+
+    // Attach some behavior to the incoming socket
+    socket.on('message', function (msg) {
+        console.log("Received message from client: "  + msg);
+        // socket.send("Take this back: " + msg);
+
+        // Broadcast that message to all connected clients
+        wsServer.clients.forEach(function (client) {
+            client.send(msg);
+        });
+
+    });
+
+});
+
+/*
+
   ws.on('message', function (message) {
     console.log("-------------------- New message --------------------");
     console.log(`Received message -->${message}<--`);
@@ -199,9 +219,9 @@ wss.on('connection', function (ws, request) {
  
     console.log(dataArray);
 
-  //console.log('dataArray dataArray dataArray dataArraydataArray dataArray dataArray ' + dataArray.length ); 
+      //console.log('dataArray dataArray dataArray dataArraydataArray dataArray dataArray ' + dataArray.length ); 
 
-  // enum Cmd {TEAMNAME,ANSWER,LOG,,,, MES,RESULT}
+      // enum Cmd {TEAMNAME,ANSWER,LOG,,,, MES,RESULT}
     switch(strObj.cmd) {
       case 'TEAMNAME':
         console.log("TEAMNAME --------------------");
@@ -235,7 +255,7 @@ wss.on('connection', function (ws, request) {
         if(answers == teammateCnt){  // receive from all players
           messageForAll(strObj.teamName,'MES','All player finish');
 
-//send array !!!
+        //send array !!!
         sendDataArrayToClient(strObj.teamName);
 
         }
@@ -285,6 +305,8 @@ wss.on('connection', function (ws, request) {
      //ws.send('MES,You have ' + ncount + ' teammates.');
   });
 
+
+  */
   ws.on('close', function () {
     console.log('userId:' + userId + ' ' +  dataArray.length );
 
