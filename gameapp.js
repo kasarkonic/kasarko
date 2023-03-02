@@ -511,13 +511,11 @@
   //const serverAddress = 'wss://kasarko.glitch.me';
     const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me';
 
-    const ws = new WebSocket(serverAddress);
-  
-       // headers: {"user-agent": "Mozilla"}
-        return  ws;
-                  //resolve(ws);
- 
-    }
+    const ws = new WebSocket(serverAddress, {
+      headers: {
+          "user-agent": "Mozilla"
+      }
+  });
 
 
 

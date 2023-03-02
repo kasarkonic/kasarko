@@ -353,7 +353,7 @@ wss.on1('connection', function (ws, request) {
    // messageForAll(teamname,'CLOSE' )
    // console.log(' ws close map.delete(userId); l=' + map.length + ' ' +  dataArray.length  + ' ' + message);
   });
-});
+//});
 
 //
 // Start the server.
