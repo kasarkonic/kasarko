@@ -162,33 +162,14 @@ server.on('upgrade', function (request, socket, head) {
   });
 });
 
-wss.on('connection', function (socket) {
-  // Some feedback on the console
-  console.log("A client just connected");
 
-
-  // Attach some behavior to the incoming socket
-  socket.on('message', function (msg) {
-      console.log("Received message from client: "  + msg);
-      // socket.send("Take this back: " + msg);
-
-      // Broadcast that message to all connected clients
-      ws.clients.forEach(function (client) {
-          client.send(msg);
-      });
-
-  });
-
-});
-
-/*
-wss.on1('connection', function (ws, request) {
+wss.on('connection', function (ws, request) {
 
   const userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
 
-  wsServer.on('connection', function (socket) {
+  ws.on('connection', function (socket) {
     // Some feedback on the console
     console.log("A client just connected");
 
@@ -198,15 +179,15 @@ wss.on1('connection', function (ws, request) {
         // socket.send("Take this back: " + msg);
 
         // Broadcast that message to all connected clients
-        wsServer.clients.forEach(function (client) {
+        ws.clients.forEach(function (client) {
             client.send(msg);
         });
 
     });
 
 });
-/*
-/*
+
+});
 
   ws.on('message', function (message) {
     console.log("-------------------- New message --------------------");
@@ -326,8 +307,10 @@ wss.on1('connection', function (ws, request) {
   });
 
 
-  */
-  ws.on('close', function () {
+  
+  wss.on('close', function (ws, request) {
+      const userId = request.session.userId;
+
     console.log('userId:' + userId + ' ' +  dataArray.length );
 
     map.delete(userId);
