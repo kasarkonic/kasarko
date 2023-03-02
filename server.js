@@ -166,6 +166,7 @@ wss.on('connection', function (socket) {
   // Some feedback on the console
   console.log("A client just connected");
 
+  
   // Attach some behavior to the incoming socket
   socket.on('message', function (msg) {
       console.log("Received message from client: "  + msg);
