@@ -80,8 +80,8 @@ app.post('/login', function (req, res) {
 app.get('/', function(req, res) {
 
   console.log("get Request " + req.url);
-  //console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
-  //res.sendFile(__dirname + '/index.html');
+  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  res.sendFile(__dirname + '/index.html');
 
   if(req.url === "/index"){
       res.sendFile(__dirname + '/index.html');
