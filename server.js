@@ -1,8 +1,8 @@
 //A maximum length of 52 characters  !!!!!!!!!!!!!!!
 
 'use strict';
-const session = require('express-session');
 const express = require('express');
+const session = require('express-session');
 const http = require('http');
 const uuid = require('uuid');
 
@@ -27,10 +27,15 @@ const sessionParser = session({
   resave: false
 });
 
+
+
+
+
 //
 // Serve static files from the 'public' folder.
 //
-app.use(express.static(__dirname));
+app.use(express.static("public"));
+//app.use(express.static(__dirname));
 app.use(sessionParser);
 
 app.post('/login', function (req, res) {
@@ -130,10 +135,20 @@ app.delete('/logout', function (request, response) {
 //
 const server = http.createServer(app);
 //
+// Start the server.  use PORT ??? 80 / 443 ???? fails with status 502
+//
+
+server.listen(8383, function () {
+  console.log('Listening on http://localhost:8383');
+});
+//
 // Create a WebSocket server completely detached from the HTTP server.
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
 //const wss = new WebSocket.Server({ server });
-const wss = new WebSocket.Server({ port: 5000 });
+const wss = new WebSocket.Server({ 
+    path: "/wss",
+    server,
+  });
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
@@ -168,26 +183,6 @@ wss.on('connection', function (ws, request) {
   const userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
-
-  ws.on('connection', function (socket) {
-    // Some feedback on the console
-    console.log("A client just connected");
-
-    // Attach some behavior to the incoming socket
-    socket.on('message', function (msg) {
-        console.log("Received message from client: "  + msg);
-        // socket.send("Take this back: " + msg);
-
-        // Broadcast that message to all connected clients
-        ws.clients.forEach(function (client) {
-            client.send(msg);
-        });
-
-    });
-
-});
-
-});
 
   ws.on('message', function (message) {
     console.log("-------------------- New message --------------------");
@@ -308,7 +303,7 @@ wss.on('connection', function (ws, request) {
 
 
   
-  wss.on('close', function (ws, request) {
+  ws.on('close', function (ws, request) {
       const userId = request.session.userId;
 
     console.log('userId:' + userId + ' ' +  dataArray.length );
@@ -336,15 +331,8 @@ wss.on('connection', function (ws, request) {
    // messageForAll(teamname,'CLOSE' )
    // console.log(' ws close map.delete(userId); l=' + map.length + ' ' +  dataArray.length  + ' ' + message);
   });
-//});
-
-//
-// Start the server.
-//
-
-server.listen(8080, function () {
-  console.log('Listening on http://localhost:8080');
 });
+
 
 function findClients(id) {
   let ret = -1;
