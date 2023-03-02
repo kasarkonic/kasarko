@@ -3,7 +3,7 @@
 
 (function () {
 
-    const ws = createSocket();
+   // const ws = createSocket();
     const head = document.querySelector('#head');
     const body = document.querySelector('#body');
     let fonsImg;
@@ -73,8 +73,8 @@
 
     let arrlen = teamimgArray.length;
     let divId = 'tdiv' + arrlen;
-  //console.log('create New element' + ' ' + divId + teamimgArray);
-  //let teamimgArray = new Array();   // id,ststus,x,y
+    //console.log('create New element' + ' ' + divId + teamimgArray);
+    //let teamimgArray = new Array();   // id,ststus,x,y
 
     const imgArray = new Map();
     imgArray.set('id', '1');
@@ -141,21 +141,13 @@
           id = teamimgArray[i].get('id');
           teamimgArray.splice(i, 1); 
           break;
+        }
       }
-      }
-  }
-
+    }
   console.log('deleteMember 2 ' + mes +' l=  '+ teamimgArray.length + ' ' + id )
-
   const element = document.getElementById(id);
   element.remove();
-
-
  // id.remove();
-
-
-
-
   }
 
   function membersFinished(menFinish){
@@ -386,7 +378,7 @@
 
      input_btn_toServer = document.createElement("BUTTON");
      input_btn_toServer.innerHTML = "Send to server";  
-    // input_btn_toServer.setAttribute('id', 'btn_toServer'); 
+        // input_btn_toServer.setAttribute('id', 'btn_toServer'); 
      input_btn_toServer.style.cssText = 'position:fixed;top:71%;left:38%;width:30%;height:7%;opacity:1;;';
 
      const div1 = document.createElement("div"); 
@@ -471,7 +463,7 @@
      div1.style.display = "none";
      div2.style.display = "none";  
      div3.style.display = "block"; 
- //AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+      //AAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
   }
 
@@ -493,13 +485,13 @@
     });
  }
 
-  function createSocket(){
-   // if (ws) {
-   //   ws.onerror = ws.onopen = ws.onclose = null;
-   //   console.log('ws.close() ');
-  //    ws.close();
-  //  }
-
+  function createSocket(){}
+    // if (ws) {
+    //   ws.onerror = ws.onopen = ws.onclose = null;
+    //   console.log('ws.close() ');
+    //    ws.close();
+    //  
+  
     //const serverAddres = "wss://kasarko.glitch.me/";
     //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
     //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
@@ -508,14 +500,14 @@
 
    // ws = new WebSocket(`ws://${location.host}`);
     //const serverAddress = 'ws://${location.host}';
-  //const serverAddress = 'wss://kasarko.glitch.me';
+   //const serverAddress = 'wss://kasarko.glitch.me';
     const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
  
     const ws = new WebSocket(serverAddress, {
       headers: {
           "user-agent": "Mozilla"
       }
-  });
+    });
 
 
 
@@ -534,76 +526,76 @@
         return;
       }
 
-    if(strObj.cmd.localeCompare('MES') == 0){
-      //alert(`showMessage ok ok ok ${strObj.message}`);
-      //showMessage(strObj.message);
-      console.log('MES ==> ' + strObj.message);
-    }
-    if(strObj.cmd.localeCompare('FINISH') == 0){
-      //alert(`showMessage ok ok ok ${strObj.message}`);
-      console.log('FINISH ==> ' + strObj.message);
-      membersFinished(strObj.message);
-    }
-
-    if(strObj.cmd.localeCompare('MEMB') == 0){
-     // showMessage('FINISH ==> ' + strObj.message);
-      let cnt = strObj.message -  teamimgArray.length;
-      console.log('MES ==> ' + strObj.message + ' ' + cnt);
-      while (cnt > 0) {
-      console.log('cnt ==> ' + cnt);
-        createteam();
-        cnt--;
+      if(strObj.cmd.localeCompare('MES') == 0){
+        //alert(`showMessage ok ok ok ${strObj.message}`);
+        //showMessage(strObj.message);
+        console.log('MES ==> ' + strObj.message);
       }
-    }
-    if(strObj.cmd.localeCompare('ANSWER') == 0){
-  
-    }
-    //messageForAll(teamname,'CLOSE' , userId)
-    if(strObj.cmd.localeCompare('CLOSE') == 0){
-      console.log('CLOSE ==> ' + strObj.mes + ' ' + strObj.cmd);
-      let mes = strObj.message;
-      deleteMember(mes);
-    }
+      if(strObj.cmd.localeCompare('FINISH') == 0){
+        //alert(`showMessage ok ok ok ${strObj.message}`);
+        console.log('FINISH ==> ' + strObj.message);
+        membersFinished(strObj.message);
+      }
+
+      if(strObj.cmd.localeCompare('MEMB') == 0){
+      // showMessage('FINISH ==> ' + strObj.message);
+        let cnt = strObj.message -  teamimgArray.length;
+        console.log('MES ==> ' + strObj.message + ' ' + cnt);
+        while (cnt > 0) {
+        console.log('cnt ==> ' + cnt);
+          createteam();
+          cnt--;
+        }
+      }
+      if(strObj.cmd.localeCompare('ANSWER') == 0){
+    
+      }
+      //messageForAll(teamname,'CLOSE' , userId)
+      if(strObj.cmd.localeCompare('CLOSE') == 0){
+        console.log('CLOSE ==> ' + strObj.mes + ' ' + strObj.cmd);
+        let mes = strObj.message;
+        deleteMember(mes);
+      }
 
 
-    if(strObj.cmd.localeCompare('RESULT') == 0){
-     // showMessage('RESULT msg -> ' + strObj.message);
-     //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
-      let strObjArray = new Array();
-      //strObjArray[0] = strObj.message;
+      if(strObj.cmd.localeCompare('RESULT') == 0){
+      // showMessage('RESULT msg -> ' + strObj.message);
+      //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
+        let strObjArray = new Array();
+        //strObjArray[0] = strObj.message;
 
-      let val0 = strObj.quest_kas;
-      let val1 = strObj.quest_kad;
-      let val2 = strObj.quest_ar_ko;
-      let val3 = strObj.quest_kur;
-      let val4 = strObj.quest_ko_dara;
-      let val5 = strObj.quest_kapec;
+        let val0 = strObj.quest_kas;
+        let val1 = strObj.quest_kad;
+        let val2 = strObj.quest_ar_ko;
+        let val3 = strObj.quest_kur;
+        let val4 = strObj.quest_ko_dara;
+        let val5 = strObj.quest_kapec;
 
-      strObjArray[0] = val0;
-      strObjArray[1] = val1;
-      strObjArray[2] = val2;
-      strObjArray[3] = val3;
-      strObjArray[4] = val4;
-      strObjArray[5] = val5;
-      allAnswArray.push(strObjArray);
+        strObjArray[0] = val0;
+        strObjArray[1] = val1;
+        strObjArray[2] = val2;
+        strObjArray[3] = val3;
+        strObjArray[4] = val4;
+        strObjArray[5] = val5;
+        allAnswArray.push(strObjArray);
 
-        displayResult(pageNr);
-      //}
-    }
+          displayResult(pageNr);
+        //}
+      }
 
-    ws.onerror = function () {
-      showMessage('WebSocket error');
-    }
+      ws.onerror = function () {
+        showMessage('WebSocket error');
+      }
 
-    ws.onopen = function () {
-      sendMessToServer(createJson('LOG','WebSocket connection established'));
-    }
+      ws.onopen = function () {
+        sendMessToServer(createJson('LOG','WebSocket connection established'));
+      }
 
-    ws.onclose = function () {
-      showMessage('WebSocket connection closed');
-      ws = null; 
-    }
-  }
+      ws.onclose = function () {
+        showMessage('WebSocket connection closed');
+        ws = null; 
+      }
+   }
 
   function sendMessToServer(mes) {
     if (!ws) {
@@ -614,7 +606,7 @@
   }
 
 
-        input_btn_new_game.onclick = function(){
+  input_btn_new_game.onclick = function(){
 
           input_quest_kas.value = '';
           input_quest_kad.value = '';
@@ -625,10 +617,10 @@
 
           sendMessToServer(createJson('NEW'));
           showInputTable(true);
-        };
+  };
 
 
-        input_btn_left.onclick = function(){
+  input_btn_left.onclick = function(){
           console.log('left_btn.onclick ==> '+ ' '+ allAnswArray.length + " " + pageNr );
           if( pageNr <= 0){
             pageNr = allAnswArray.length-1 ;
@@ -639,7 +631,7 @@
           displayResult(pageNr);
         };
 
-        input_btn_mix.onclick = function(){
+  input_btn_mix.onclick = function(){
           pageNr = pageNr + stepp;
           stepp++;
           if (pageNr >= allAnswArray.length){
@@ -647,7 +639,7 @@
           }
           displayResult(pageNr);
         };
-        input_btn_right.onclick = function(){
+  input_btn_right.onclick = function(){
           console.log('btn_right.onclick ==> '+ ' ' +allAnswArray.length + " " + pageNr );
           if( pageNr >= allAnswArray.length - 1){
             pageNr = 0;
@@ -658,7 +650,7 @@
           displayResult(pageNr);
          };
 
-        input_btn_submTeam.onclick = function(){
+  input_btn_submTeam.onclick = function(){
           team = input_team_name.value;
           label_info_team_name.innerHTML = team;
           console.log('enter teamename ==> ' + ' ' + team);
@@ -677,7 +669,7 @@
     sendMessToServer(createJson('TEAMNAME')); 
   };
  */
- input_quest_kas.oninput = function () {
+    input_quest_kas.oninput = function () {
         string_map.set('kas',input_quest_kas.value);
     };
     input_quest_kad.oninput = function () {
@@ -728,7 +720,7 @@
           "Fill all answers !!!!!");
           return;
         }
-    };
+    }
 
   function createJson(trCmd, mes = null){
     const timeSinc = new Date();
@@ -801,7 +793,6 @@
       val =  val % max;
       return val;
     }
-
   }
 
   function showInputTable(value){ // 
@@ -821,6 +812,6 @@
       label_info_team_name.style.display = "block";  
     }
   }
-
-})();
+//(function () {
+});
 

@@ -77,6 +77,11 @@ app.post('/login', function (req, res) {
   res.send({ result: 'OK', message: 'Session updated' });
 });
 
+app.get("/gameapp.js", function(req, res) {
+
+  res.sendFile(__dirname + '/gameapp.js');
+});
+
 app.get('/', function(req, res) {
 
   //console.log("get Request " + req.url);
@@ -132,7 +137,7 @@ app.get('/', function(req, res) {
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
 
-    res.send({ result: "OK", message: "Session updated", id });
+   // res.send({ result: "OK", message: "Session updated", id });
 });
 
 /*
