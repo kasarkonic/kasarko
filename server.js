@@ -77,10 +77,66 @@ app.post('/login', function (req, res) {
   res.send({ result: 'OK', message: 'Session updated' });
 });
 
+app.get('', function(req, res) {
+  console.log("Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  if (req.url.includes('/')){
+    res.sendFile(__dirname + '/index.html');
+  }
+  if (req.url.includes('/gameapp.js')){
+    res.sendFile(__dirname + '/gameapp.js');
+  }
+
+   
+  if (req.url.includes('/images/pngwing(R).png')){
+    res.sendFile(__dirname + '/images/pngwing(R).png');
+  }
+  if (req.url.includes('/images/pngwing(L).png')){
+    res.sendFile(__dirname + '/images/pngwing(L).png');
+    //sendFileContent(res, req.url.toString().substring(1), "image/");
+  }
+  if (req.url.includes('/images/fons41.png')){
+    res.sendFile(__dirname + '/images/fons41.png');
+  }
+  if (req.url.includes('/images/fons3.jpg')){
+    res.sendFile(__dirname + '/images/fons3.jpg');
+  }
+  if (req.url.includes('/images/scrill1.png')){
+    res.sendFile(__dirname + '/images/scrill1.png');
+  }
+  if (req.url.includes('/images/new.png')){
+    res.sendFile(__dirname + '/images/new.png');
+  }
+  if (req.url.includes('/images/mix.png')){
+    res.sendFile(__dirname + '/images/mix.png');
+  }
+  if (req.url.includes('/favicon.ico')){
+    res.sendFile(__dirname + '/images/favicon.ico');
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ });
+
+
+
+
+
+
 app.get("/gameapp.js", function(req, res) {
 
   res.sendFile(__dirname + '/gameapp.js');
 });
+
 
 app.get('/', function(req, res) {
 
