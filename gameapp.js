@@ -50,7 +50,6 @@
 
    const winWidth = window.innerWidth;
    const winHeight = window.innerHeight;
-   let  ws;
    //showMessage('screen: ' + scrWidth + ' x ' + scrHeight + ',  window ' + winWidth + ' x ' + winHeight);
   
    let teamimgArray = new Array();   // id,ststus,x,y
@@ -493,6 +492,8 @@ function move(element, direction, distance=20) {
       
       var url = `wss://${location.host}/wss?id=${id}`;
 
+
+
       var serverAddress = `wss://${location.host}/wss?id=${id}`;
       const ws1 = new WebSocket(serverAddress, {
         headers: {
@@ -525,8 +526,10 @@ function move(element, direction, distance=20) {
    //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
     
    
+  const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
+  const ws = new WebSocket(`${protocol}://${location.host}`);
 
-   ws = new WebSocket(`ws://${location.host}`);
+  // ws = new WebSocket(`ws://${location.host}`);
    //const serverAddress = 'ws://${location.host}';
   //const serverAddress = 'wss://kasarko.glitch.me';
    //const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
