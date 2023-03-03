@@ -106,7 +106,6 @@ app.get('/', function(req, res) {
 
     res.send({ result: 'OK', message: 'Session updated' }); 
     //response.setResponseCode(200, "OK");
-
 });
 
 /*
