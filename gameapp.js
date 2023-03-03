@@ -50,7 +50,7 @@
 
    const winWidth = window.innerWidth;
    const winHeight = window.innerHeight;
-
+   let  ws;
    //showMessage('screen: ' + scrWidth + ' x ' + scrHeight + ',  window ' + winWidth + ' x ' + winHeight);
   
    let teamimgArray = new Array();   // id,ststus,x,y
@@ -481,13 +481,28 @@ function move(element, direction, distance=20) {
 
  function login(){
   console.log('login(){ '+ ' ' );
+  console.log('location:  '+ location.host + '  ,  ' );
+  var url = `wss://${location.host}/wss?id=${id}`;
 
-  fetch(url)
+  fetch('https://upbeat-sunrise-cinema.glitch.me')
     .then((response) => {
       return response.json();
     })
-    .then((data) => {})
-    console.log('fetch data ' +  data.id );
+    .then((data) => {
+      console.log('fetch data ' +  data.id );
+      
+      var url = `wss://${location.host}/wss?id=${id}`;
+
+      var serverAddress = `wss://${location.host}/wss?id=${id}`;
+      const ws1 = new WebSocket(serverAddress, {
+        headers: {
+            "user-agent": "Mozilla"
+        }
+      });
+
+
+
+    })
 
    fetch('/login', { method: 'POST', credentials: 'same-origin' })
    .then(handleResponse)
@@ -511,22 +526,22 @@ function move(element, direction, distance=20) {
     
    
 
-  // ws = new WebSocket(`ws://${location.host}`);
+   ws = new WebSocket(`ws://${location.host}`);
    //const serverAddress = 'ws://${location.host}';
   //const serverAddress = 'wss://kasarko.glitch.me';
    //const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
 
    //id = data.id;
-   let id = '7538c383-9436-4f5e-9c65-2b9e15fd197a';
+
   //AAAA
-   var serverAddress = `wss://${location.host}/wss?id=${id}`;
+  // var serverAddress = `wss://${location.host}/wss?id=${id}`;
 
 
-   const ws = new WebSocket(serverAddress, {
-     headers: {
-         "user-agent": "Mozilla"
-     }
-   });
+   // ws = new WebSocket(serverAddress, {
+  //   headers: {
+  //       "user-agent": "Mozilla"
+  //   }
+  // });
 
 
 
