@@ -1,8 +1,8 @@
 //A maximum length of 52 characters  !!!!!!!!!!!!!!!
 
 'use strict';
-const session = require('express-session');
 const express = require('express');
+const session = require("express-session");
 const http = require('http');
 const uuid = require('uuid');
 
@@ -17,24 +17,52 @@ var dataArray = new Array(dArray);// vienmēr vismaz 1 jābūt
 
 const map = new Map(); 
 
-
 //
 // We need the same instance of the session parser in express and
 // WebSocket server.
 //
-
-
-
 const sessionParser = session({
   saveUninitialized: false,
   secret: '$eCuRiTy',
   resave: false
 });
 
+// Create an HTTP server.
+//
+const server = http.createServer(app);
+//
+// Start the server.  use PORT ??? 80 / 443 ???? fails with status 502
+//
+
+var port = process.env.PORT || 8383;
+var hostname = "0.0.0.0";
+server.listen(port, hostname);
+console.log(`Server running at ${hostname}:${port}`);
+//
+// Create a WebSocket server completely detached from the HTTP server.
+//const wss = new WebSocketServer({ clientTracking: false, noServer: true });
+//const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ 
+    path: "/wss",
+    server,
+  });
+
+//var dataArray = new Array[dArray];
+//var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
+
+console.log('////--------------------------------------');
+//setTimeout(timerFunction, 1000);
+setInterval(timerFunction, 1000);
+
+
+
+
+
 //
 // Serve static files from the 'public' folder.
 //
-app.use(express.static(__dirname));
+app.use(express.static("public"));
+//app.use(express.static(__dirname));
 app.use(sessionParser);
 
 app.post('/login', function (req, res) {
@@ -46,14 +74,75 @@ app.post('/login', function (req, res) {
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');
   req.session.userId = id;
-  res.send({ result: 'OK', message: 'Session updated' }); 
+  res.send({ result: 'OK', message: 'Session updated' });
 });
+
+app.get('', function(req, res) {
+  console.log("Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  if (req.url.includes('/')){
+    res.sendFile(__dirname + '/index.html');
+  }
+  if (req.url.includes('/gameapp.js')){
+    res.sendFile(__dirname + '/gameapp.js');
+  }
+
+   
+  if (req.url.includes('/images/pngwing(R).png')){
+    res.sendFile(__dirname + '/images/pngwing(R).png');
+  }
+  if (req.url.includes('/images/pngwing(L).png')){
+    res.sendFile(__dirname + '/images/pngwing(L).png');
+    //sendFileContent(res, req.url.toString().substring(1), "image/");
+  }
+  if (req.url.includes('/images/fons41.png')){
+    res.sendFile(__dirname + '/images/fons41.png');
+  }
+  if (req.url.includes('/images/fons3.jpg')){
+    res.sendFile(__dirname + '/images/fons3.jpg');
+  }
+  if (req.url.includes('/images/scrill1.png')){
+    res.sendFile(__dirname + '/images/scrill1.png');
+  }
+  if (req.url.includes('/images/new.png')){
+    res.sendFile(__dirname + '/images/new.png');
+  }
+  if (req.url.includes('/images/mix.png')){
+    res.sendFile(__dirname + '/images/mix.png');
+  }
+  if (req.url.includes('/favicon.ico')){
+    res.sendFile(__dirname + '/images/favicon.ico');
+  }
+
+
+
+
+
+
+  res.send({ result: 'OK', message: 'Session updated' });
+
+
+
+
+
+
+ });
+
+
+
+
+
+
+app.get("/gameapp.js", function(req, res) {
+
+  res.sendFile(__dirname + '/gameapp.js');
+});
+
 
 app.get('/', function(req, res) {
 
-  console.log("get Request " + req.url);
-  //console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
-  //res.sendFile(__dirname + '/index.html');
+  //console.log("get Request " + req.url);
+  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  res.sendFile(__dirname + '/index.html');
 
   if(req.url === "/index"){
       res.sendFile(__dirname + '/index.html');
@@ -104,8 +193,7 @@ app.get('/', function(req, res) {
       //sendFileContent(res, req.url.toString().substring(1), "image/");
     }
 
-    res.send({ result: 'OK', message: 'Session updated' }); 
-    //response.setResponseCode(200, "OK");
+   // res.send({ result: "OK", message: "Session updated", id });
 });
 
 /*
@@ -126,35 +214,6 @@ app.delete('/logout', function (request, response) {
     response.send({ result: 'OK', message: 'Session destroyed' });
   });
 });
-
-//
-// Create an HTTP server.
-//
-const server = http.createServer(app);
-
-//
-// Start the server.
-//
-
-server.listen(8080, function () {
-  console.log('Listening on http://localhost:8080');
-});
-
-
-
-//
-// Create a WebSocket server completely detached from the HTTP server.
-//const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-//const wss = new WebSocket.Server({ server });
-const wss = new WebSocket.Server({ port: 5000 });
-
-//var dataArray = new Array[dArray];
-//var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
-
-console.log('////--------------------------------------');
-//setTimeout(timerFunction, 1000);
-//        test setInterval(timerFunction, 1000);
-
 
 server.on('upgrade', function (request, socket, head) {
   console.log('Parsing session from request...');
@@ -181,26 +240,6 @@ wss.on('connection', function (ws, request) {
   const userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
-/*
-  ws.on('connection', function (socket) {
-    // Some feedback on the console
-    console.log("A client just connected");
-
-    // Attach some behavior to the incoming socket
-    socket.on('message', function (msg) {
-        console.log("Received message from client: "  + msg);
-        // socket.send("Take this back: " + msg);
-
-        // Broadcast that message to all connected clients
-        ws.clients.forEach(function (client) {
-            client.send(msg);
-        });
-
-    });
-
-  });
-  */
-//});
 
   ws.on('message', function (message) {
     console.log("-------------------- New message --------------------");
@@ -298,12 +337,21 @@ wss.on('connection', function (ws, request) {
             id:'userId',
             dataArray_length:dataArray.length,
             map_length:map.length,
+            /*
             quest_kad:kad,
             quest_ar_ko:ar_ko,
             quest_kur:kur,
             quest_ko_dara:ko_dara,
             quest_kapec:kapec,
             message:mes,
+            */
+            quest_kad:'kad',
+            quest_ar_ko:'ar_ko',
+            quest_kur:'kur',
+            quest_ko_dara:'ko_dara',
+            quest_kapec:'kapec',
+            message:'mes',
+
             time:''};
           let jsonObj = JSON.stringify(resulttxt);
           map.get(userId).send(jsonObj);
@@ -352,7 +400,6 @@ wss.on('connection', function (ws, request) {
 });
 
 
-
 function findClients(id) {
   let ret = -1;
   console.log('findClients: ' + id);
@@ -389,10 +436,10 @@ function allTeaamAnswer(team){
     if (!dataArray[i][2].localeCompare(team)){
       allTeaam.push(dataArray[i]);   // ws <= id
       //console.log(i + ' push '+ dataArray[i][3] +' ' + team )
-   }
-}
-console.log('find  ' + allTeaam.length + ' teammates');
-return   allTeaam;
+    }
+  }
+  console.log('find  ' + allTeaam.length + ' teammates');
+  return   allTeaam;
 }
 
 
@@ -420,7 +467,7 @@ function createJson(trCmd, mes = null){
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
   const timeSinc = new Date();
 
-  const resulttxt = {
+  let resulttxt = {
   cmd:trCmd,
   id:'',
   team_name:'',
@@ -487,12 +534,12 @@ function sendDataArrayToClient(teamname){
     console.log(i + ' ' + dataArray[i][2]  + ' ' + dataArray[i][3] + ' ' + dataArray[i][4]  + ' ' + dataArray[i][5] + ' ' + dataArray[i][6]  + ' ' + dataArray[i][7]);
     if (!dataArray[i][2].localeCompare(teamname)){
       allAnswArray.push(dataArray[i]);
-    }
-  }
+   }
+}
 
-  for (let i=0 ; i < allAnswArray.length; i=i+1){
-    console.log(i + ' ' + allAnswArray[i][2]  + ' ' + allAnswArray[i][3] + ' ' + allAnswArray[i][4]  + ' ' + allAnswArray[i][5] + ' ' + allAnswArray[i][6]  + ' ' + allAnswArray[i][7]);
-  }
+for (let i=0 ; i < allAnswArray.length; i=i+1){
+  console.log(i + ' ' + allAnswArray[i][2]  + ' ' + allAnswArray[i][3] + ' ' + allAnswArray[i][4]  + ' ' + allAnswArray[i][5] + ' ' + allAnswArray[i][6]  + ' ' + allAnswArray[i][7]);
+}
 
 
 
@@ -535,8 +582,6 @@ function sendDataArrayToClient(teamname){
         teamidArray.forEach(element => element.send(jsonObj));
 
       //console.log('send result for all: ' + jsonObj);
-
-
   }
 }
 
