@@ -113,16 +113,7 @@ app.get('', function(req, res) {
     res.sendFile(__dirname + '/images/favicon.ico');
   }
 
-
-
-
-
-
-  res.send({ result: 'OK', message: 'Session updated' });
-
-
-
-
+  res.status(200);
 
 
  });
