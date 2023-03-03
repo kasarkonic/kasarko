@@ -481,6 +481,14 @@ function move(element, direction, distance=20) {
 
  function login(){
   console.log('login(){ '+ ' ' );
+
+  fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {})
+    console.log('fetch data ' +  data.id );
+
    fetch('/login', { method: 'POST', credentials: 'same-origin' })
    .then(handleResponse)
    .then(showMessage)
@@ -701,7 +709,8 @@ function move(element, direction, distance=20) {
    };
 
    function handleResponse(response) {
-    console.log('response.id '+ ' ' + response.id);
+    let resid = response.data.id;
+    console.log('response.id '+ ' ' + resid);
     
     let id = response.id;
     console.log('data.id '+ ' ' + id );
