@@ -17,10 +17,14 @@ var dataArray = new Array(dArray);// vienmēr vismaz 1 jābūt
 
 const map = new Map(); 
 
+
 //
 // We need the same instance of the session parser in express and
 // WebSocket server.
 //
+
+
+
 const sessionParser = session({
   saveUninitialized: false,
   secret: '$eCuRiTy',
@@ -42,9 +46,7 @@ app.post('/login', function (req, res) {
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');
   req.session.userId = id;
-  res.send({ result: 'OK', message: 'Session updated' });
-
-  
+  res.send({ result: 'OK', message: 'Session updated' }); 
 });
 
 app.get('/', function(req, res) {
@@ -129,6 +131,17 @@ app.delete('/logout', function (request, response) {
 // Create an HTTP server.
 //
 const server = http.createServer(app);
+
+//
+// Start the server.
+//
+
+server.listen(8080, function () {
+  console.log('Listening on http://localhost:8080');
+});
+
+
+
 //
 // Create a WebSocket server completely detached from the HTTP server.
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
@@ -168,7 +181,7 @@ wss.on('connection', function (ws, request) {
   const userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
-
+/*
   ws.on('connection', function (socket) {
     // Some feedback on the console
     console.log("A client just connected");
@@ -185,9 +198,9 @@ wss.on('connection', function (ws, request) {
 
     });
 
-});
-
-});
+  });
+  */
+//});
 
   ws.on('message', function (message) {
     console.log("-------------------- New message --------------------");
@@ -308,7 +321,7 @@ wss.on('connection', function (ws, request) {
 
 
   
-  wss.on('close', function (ws, request) {
+  ws.on('close', function (ws, request) {
       const userId = request.session.userId;
 
     console.log('userId:' + userId + ' ' +  dataArray.length );
@@ -336,15 +349,9 @@ wss.on('connection', function (ws, request) {
    // messageForAll(teamname,'CLOSE' )
    // console.log(' ws close map.delete(userId); l=' + map.length + ' ' +  dataArray.length  + ' ' + message);
   });
-//});
-
-//
-// Start the server.
-//
-
-server.listen(8080, function () {
-  console.log('Listening on http://localhost:8080');
 });
+
+
 
 function findClients(id) {
   let ret = -1;
@@ -480,12 +487,12 @@ function sendDataArrayToClient(teamname){
     console.log(i + ' ' + dataArray[i][2]  + ' ' + dataArray[i][3] + ' ' + dataArray[i][4]  + ' ' + dataArray[i][5] + ' ' + dataArray[i][6]  + ' ' + dataArray[i][7]);
     if (!dataArray[i][2].localeCompare(teamname)){
       allAnswArray.push(dataArray[i]);
-   }
-}
+    }
+  }
 
-for (let i=0 ; i < allAnswArray.length; i=i+1){
-  console.log(i + ' ' + allAnswArray[i][2]  + ' ' + allAnswArray[i][3] + ' ' + allAnswArray[i][4]  + ' ' + allAnswArray[i][5] + ' ' + allAnswArray[i][6]  + ' ' + allAnswArray[i][7]);
-}
+  for (let i=0 ; i < allAnswArray.length; i=i+1){
+    console.log(i + ' ' + allAnswArray[i][2]  + ' ' + allAnswArray[i][3] + ' ' + allAnswArray[i][4]  + ' ' + allAnswArray[i][5] + ' ' + allAnswArray[i][6]  + ' ' + allAnswArray[i][7]);
+  }
 
 
 
