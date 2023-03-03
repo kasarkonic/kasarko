@@ -27,6 +27,10 @@ const sessionParser = session({
   resave: false
 });
 
+app.use(express.static("public"));
+app.use(express.static(__dirname));
+app.use(sessionParser);
+
 // Create an HTTP server.
 //
 const server = http.createServer(app);
@@ -61,15 +65,13 @@ setInterval(timerFunction, 1000);
 //
 // Serve static files from the 'public' folder.
 //
-app.use(express.static("public"));
-//app.use(express.static(__dirname));
-app.use(sessionParser);
 
 app.post('/login', function (req, res) {
   
   console.log("post Request " + req.url);
-  //console.log(__dirname + '/images' + req.url);
-  //console.log("post Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  console.log("__dirname:    " + __dirname);
+  console.log(__dirname + '/images' + req.url);
+  console.log("post Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
 
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');
@@ -84,6 +86,11 @@ app.get('', function(req, res) {
   }
   if (req.url.includes('/gameapp.js')){
     res.sendFile(__dirname + '/gameapp.js');
+  }
+
+  if (req.url.includes('png')){
+    res.sendFile(__dirname + '/images' + req.url);
+    console.log('send file:   ' + __dirname + '/images' + req.url);
   }
 
    
@@ -227,7 +234,7 @@ server.on('upgrade', function (request, socket, head) {
 
 
 wss.on('connection', function (ws, request) {
-
+  console.log(' WSS.connection');
   const userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
