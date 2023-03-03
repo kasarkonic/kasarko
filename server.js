@@ -81,6 +81,8 @@ app.post('/login', function (req, res) {
 
 app.get('', function(req, res) {
   console.log("Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+ 
+ /*
   if (req.url.includes('/')){
     res.sendFile(__dirname + '/index.html');
   }
@@ -121,7 +123,7 @@ app.get('', function(req, res) {
   }
 
   res.status(200);
-
+*/
 
  });
 
@@ -130,18 +132,18 @@ app.get('', function(req, res) {
 
 
 
-app.get("/gameapp.js", function(req, res) {
+//app.get("/gameapp.js", function(req, res) {
 
-  res.sendFile(__dirname + '/gameapp.js');
-});
+ // res.sendFile(__dirname + '/gameapp.js');
+//});
 
 
 app.get('/', function(req, res) {
 
   //console.log("get Request " + req.url);
   console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
-  res.sendFile(__dirname + '/index.html');
-
+ // res.sendFile(__dirname + '/index.html');
+/*
   if(req.url === "/index"){
       res.sendFile(__dirname + '/index.html');
     };
@@ -192,6 +194,9 @@ app.get('/', function(req, res) {
     }
 
    // res.send({ result: "OK", message: "Session updated", id });
+
+
+   */
 });
 
 /*

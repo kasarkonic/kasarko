@@ -1,9 +1,8 @@
 // vers 0.0.1
 
 
-(function () {
+//(function () {
 
-  // const ws = createSocket();
    const head = document.querySelector('#head');
    const body = document.querySelector('#body');
    let fonsImg;
@@ -481,10 +480,11 @@ function move(element, direction, distance=20) {
 
 
  function login(){
+  console.log('login(){ '+ ' ' );
    fetch('/login', { method: 'POST', credentials: 'same-origin' })
    .then(handleResponse)
    .then(showMessage)
-   //.then(createSocket)
+   .then(createSocket)
    .catch(function (err) {
      showMessage(err.message);
    });
@@ -506,7 +506,13 @@ function move(element, direction, distance=20) {
   // ws = new WebSocket(`ws://${location.host}`);
    //const serverAddress = 'ws://${location.host}';
   //const serverAddress = 'wss://kasarko.glitch.me';
-   const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
+   //const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
+
+   //id = data.id;
+   let id = '7538c383-9436-4f5e-9c65-2b9e15fd197a';
+  //AAAA
+   var serverAddress = `wss://${location.host}/wss?id=${id}`;
+
 
    const ws = new WebSocket(serverAddress, {
      headers: {
@@ -593,6 +599,7 @@ function move(element, direction, distance=20) {
      }
 
      ws.onopen = function () {
+      console.log('WebSocket connection established');
        sendMessToServer(createJson('LOG','WebSocket connection established'));
      }
 
@@ -694,9 +701,17 @@ function move(element, direction, distance=20) {
    };
 
    function handleResponse(response) {
+    console.log('response.id '+ ' ' + response.id);
+    
+    let id = response.id;
+    console.log('data.id '+ ' ' + id );
+
      return response.ok
+
+
        ? response.json().then((data) => JSON.stringify(data, null, 2))
        : Promise.reject(new Error('Unexpected response'));
+
    }
 
    input_btn_toServer.onclick = function(){
@@ -817,7 +832,5 @@ function move(element, direction, distance=20) {
      label_info_team_name.style.display = "block";  
    }
  }
- //window.onload = initPage();
-
-})();
+//})();
 
