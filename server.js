@@ -14,7 +14,7 @@ const app = express();
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
 var dArray = new Array('1','1','','','','','','','','','');
 var dataArray = new Array(dArray);// vienmēr vismaz 1 jābūt
-
+var wsRoute;
 const map = new Map(); 
 
 //
@@ -71,7 +71,7 @@ app.post('/login', function (req, res) {
   console.log("post Request " + req.url + "    __dirname:  " + __dirname);
   console.log(__dirname + '/images' + req.url);
   console.log("post Request " + " , "+ req.hostname + " , "+ req.ip + " , "+ req.path );
-
+  wsRoute = req.hostname;
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');
   req.session.userId = id;
@@ -80,122 +80,13 @@ app.post('/login', function (req, res) {
 
 app.get('', function(req, res) {
   console.log("Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
- 
- /*
-  if (req.url.includes('/')){
-    res.sendFile(__dirname + '/index.html');
-  }
-  if (req.url.includes('/gameapp.js')){
-    res.sendFile(__dirname + '/gameapp.js');
-  }
-
-  if (req.url.includes('png')){
-    res.sendFile(__dirname + '/images' + req.url);
-    console.log('send file:   ' + __dirname + '/images' + req.url);
-  }
-
-   
-  if (req.url.includes('/images/pngwing(R).png')){
-    res.sendFile(__dirname + '/images/pngwing(R).png');
-  }
-  if (req.url.includes('/images/pngwing(L).png')){
-    res.sendFile(__dirname + '/images/pngwing(L).png');
-    //sendFileContent(res, req.url.toString().substring(1), "image/");
-  }
-  if (req.url.includes('/images/fons41.png')){
-    res.sendFile(__dirname + '/images/fons41.png');
-  }
-  if (req.url.includes('/images/fons3.jpg')){
-    res.sendFile(__dirname + '/images/fons3.jpg');
-  }
-  if (req.url.includes('/images/scrill1.png')){
-    res.sendFile(__dirname + '/images/scrill1.png');
-  }
-  if (req.url.includes('/images/new.png')){
-    res.sendFile(__dirname + '/images/new.png');
-  }
-  if (req.url.includes('/images/mix.png')){
-    res.sendFile(__dirname + '/images/mix.png');
-  }
-  if (req.url.includes('/favicon.ico')){
-    res.sendFile(__dirname + '/images/favicon.ico');
-  }
-
-  res.status(200);
-*/
-
  });
-
-
-
-
-
-
-//app.get("/gameapp.js", function(req, res) {
-
- // res.sendFile(__dirname + '/gameapp.js');
-//});
-
 
 app.get('/', function(req, res) {
 
   //console.log("get Request " + req.url);
   console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
  // res.sendFile(__dirname + '/index.html');
-/*
-  if(req.url === "/index"){
-      res.sendFile(__dirname + '/index.html');
-    };
-  
-    if(req.url === "/gameapp.js"){
-      res.sendFile(__dirname + '/gameapp.js');
-    };
-    //if(request.url === "/images/pngwing(R).png"){
-  //    res.sendFile(__dirname + '/images/pngwing(R).png');
-   // res.sendFile(__dirname +  request.url);
-
-    //};
-
-    if (req.url.includes('/images/pngwing(R).png')){
-      res.sendFile(__dirname + '/images/pngwing(R).png');
-    }
-    if (req.url.includes('/images/pngwing(L).png')){
-      res.sendFile(__dirname + '/images/pngwing(L).png');
-      //sendFileContent(res, req.url.toString().substring(1), "image/");
-    }
-    if (req.url.includes('/images/fons41.png')){
-      res.sendFile(__dirname + '/images/fons41.png');
-    }
-    if (req.url.includes('/images/fons3.jpg')){
-      res.sendFile(__dirname + '/images/fons3.jpg');
-    }
-    if (req.url.includes('/images/scrill1.png')){
-      res.sendFile(__dirname + '/images/scrill1.png');
-    }
-    if (req.url.includes('/images/new.png')){
-      res.sendFile(__dirname + '/images/new.png');
-    }
-    if (req.url.includes('/images/mix.png')){
-      res.sendFile(__dirname + '/images/mix.png');
-    }
-    if (req.url.includes('/favicon.ico')){
-      res.sendFile(__dirname + '/images/favicon.ico');
-    }
-
-
-
-    //   ???????????????? res.sendFile(__dirname + '/images' + req.url);
-
-    if (req.url.includes('.jpg')){
-      //res.sendFile(__dirname + '/images/pngwing(R).png');
-       // res.sendFile(__dirname +  req.url);
-      //sendFileContent(res, req.url.toString().substring(1), "image/");
-    }
-
-   // res.send({ result: "OK", message: "Session updated", id });
-
-
-   */
 });
 
 /*
@@ -218,23 +109,27 @@ app.delete('/logout', function (request, response) {
 });
 
 server.on('upgrade', function (request, socket, head) {
-  console.log('Parsing session from request...');
+  console.log('Parsing session from request...', request.url,' , ',wsRoute);
 
-  var validationResult = validateCookie(req.headers.cookie);
-  if (validationResult) {
-
-    console.log('validationResult' + validationResult);
-
-    //...
+  wsRoute = '/';
+  if (request.url === wsRoute) {
+    wss.handleUpgrade(request, socket, head, ws => {
+      const authenticated = validateToken(request.headers.cookie) // your authentication method
+      if (!authenticated) {
+        ws.close(1008, 'Unauthorized') // 1008: policy violation
+        console.log('Unauthorized close');
+        return
+      }
+      console.log('Session is parsed!');
+      wss.emit('connection', ws, request)
+    })
   } else {
-    socket.write('HTTP/1.1 401 Web Socket Protocol Handshake\r\n' +
-                 'Upgrade: WebSocket\r\n' +
-                 'Connection: Upgrade\r\n' +
-                 '\r\n');
-                 socket.close();
-                 socket.destroy();
-                 return;
+    console.log('Unauthorized destroy');
+    socket.destroy()
   }
+
+
+
 
 
 
@@ -247,10 +142,10 @@ server.on('upgrade', function (request, socket, head) {
 
     console.log('Session is parsed!');
 
-    wss.handleUpgrade(request, socket, head, function (wss) {
-      wss.emit('connection', wss, request);
-      console.log('emit connection');
-    });
+ //   wss.handleUpgrade(request, socket, head, function (wss) {
+ //     wss.emit('connection', wss, request);
+ //     console.log('emit connection');
+ //   });
   });
 });
 
