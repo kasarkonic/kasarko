@@ -999,7 +999,7 @@ function move(element, direction, distance=20) {
       
       let url = BASE_URL.replace('http', 'ws').replace(path, '') ;
       
-      console.log("url", BASE_URL, url, path);
+      console.log("url=>", BASE_URL," U=>", url," P=>", path);
       const ws = new WebSocket(url);
 
 
@@ -1363,14 +1363,22 @@ function move(element, direction, distance=20) {
    //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
    //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
    
-   
-   const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me:3000/';
+   /*
+   const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
        ws = new WebSocket(serverAddress, {
         headers: {
             "user-agent": "Mozilla"
         }
       });
-   
+   */
+      var socket = window.socket("/channel", {
+        reconnect: true,
+        debug: false
+      });
+
+
+
+
   const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
  
  

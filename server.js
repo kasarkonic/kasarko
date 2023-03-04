@@ -68,10 +68,9 @@ setInterval(timerFunction, 1000);
 
 app.post('/login', function (req, res) {
   
-  console.log("post Request " + req.url);
-  console.log("__dirname:    " + __dirname);
+  console.log("post Request " + req.url + "    __dirname:  " + __dirname);
   console.log(__dirname + '/images' + req.url);
-  console.log("post Request " + req.url + " , "+ req.hostname + " , "+ req.ip + " , "+ req.path + " "+ req.query);
+  console.log("post Request " + " , "+ req.hostname + " , "+ req.ip + " , "+ req.path );
 
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');
