@@ -14,7 +14,6 @@ const app = express();
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
 var dArray = new Array('1','1','','','','','','','','','');
 var dataArray = new Array(dArray);// vienmēr vismaz 1 jābūt
-var wsRoute;
 const map = new Map(); 
 
 //
@@ -74,7 +73,6 @@ app.post('/login', function (req, res) {
   console.log("post Request " + req.url + "    __dirname:  " + __dirname);
   console.log(__dirname + '/images' + req.url);
   console.log("post Request " + " , "+ req.hostname + " , "+ req.ip + " , "+ req.path );
-  wsRoute = req.hostname;
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');
   req.session.userId = id;
@@ -82,13 +80,13 @@ app.post('/login', function (req, res) {
 });
 
 app.get('', function(req, res) {
-  console.log("Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  console.log("GET Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
  });
 
 app.get('/', function(req, res) {
 
-  //console.log("get Request " + req.url);
-  console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  console.log("get / Request " + req.url);
+  //console.log("get Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
  // res.sendFile(__dirname + '/index.html');
 });
 
@@ -110,27 +108,18 @@ app.delete('/logout', function (request, response) {
     response.send({ result: 'OK', message: 'Session destroyed' });
   });
 });
+    /*
+    server.on('upgrade', function (request, socket, head) {
+      console.log('Parsing session from request...', request.url);
 
-server.on('upgrade', function (request, socket, head) {
-  console.log('Parsing session from request...', request.url,' , ',wsRoute);
-
-  wsRoute = '/';
-  if (request.url === wsRoute) {
-    wss.handleUpgrade(request, socket, head, ws => {
-      const authenticated = validateToken(request.headers.cookie) // your authentication method
-      if (!authenticated) {
-        ws.close(1008, 'Unauthorized') // 1008: policy violation
-        console.log('Unauthorized close');
-        return
-      }
+      wss.handleUpgrade(request, socket, head, ws => {
+     
       console.log('Session is parsed!');
       wss.emit('connection', ws, request)
     })
-  } else {
-    console.log('Unauthorized destroy');
-    socket.destroy()
   }
 
+*/
 
 
 
@@ -145,12 +134,12 @@ server.on('upgrade', function (request, socket, head) {
 
     console.log('Session is parsed!');
 
- //   wss.handleUpgrade(request, socket, head, function (wss) {
- //     wss.emit('connection', wss, request);
- //     console.log('emit connection');
- //   });
+   //   wss.handleUpgrade(request, socket, head, function (wss) {
+   //     wss.emit('connection', wss, request);
+   //     console.log('emit connection');
+   //   });
   });
-});
+//});
 
 
 wss.on('connection', function connection(ws) {
