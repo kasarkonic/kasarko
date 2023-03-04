@@ -278,7 +278,7 @@
     }
 
     if (direction=="up") {
-      var topValue = elStyle.getPropertyValue(topOrLeft).replace("px", "");
+      var topValue = elStyle.getPropertyVacreateSocketlue(topOrLeft).replace("px", "");
       element.style.top = (Number(topValue) - distance) + "px";
     }
      if (direction=="left") {

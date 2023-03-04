@@ -7,7 +7,7 @@ const http = require('http');
 const uuid = require('uuid');
 
 //const { WebSocketServer } = require('ws');
-const WebSocket = require('ws');
+const ws = require('ws');
 const app = express();
 
 
@@ -45,11 +45,14 @@ console.log(`Server running at ${hostname}:${port}`);
 //
 // Create a WebSocket server completely detached from the HTTP server.
 //const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-//const wss = new WebSocket.Server({ server });
-const wss = new WebSocket.Server({ 
-    path: "/wss",
-    server: server,
-  });
+const wss = new ws.Server({ server });
+//const wss = new WebSocket.Server({ 
+//    path: "/wss",
+//    server: server,
+//  });
+
+// we're using an ES2015 Set to keep track of every client that's connected
+let sockets = new Set();
 
 //var dataArray = new Array[dArray];
 //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
@@ -150,13 +153,19 @@ server.on('upgrade', function (request, socket, head) {
 });
 
 
-wss.on('connection', function (ws, request) {
+wss.on('connection', function connection(ws) {
   console.log(' WSS.connection');
+  sockets.add(WebSocket);
+
   const userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
 
-  ws.on('message', function (message) {
+
+
+
+
+  ws.on('message', function incoming(message) {
     console.log("-------------------- New message --------------------");
     console.log(`Received message -->${message}<--`);
     const strObj = JSON.parse(message);
@@ -285,8 +294,8 @@ wss.on('connection', function (ws, request) {
 
   
   ws.on('close', function (ws, request) {
-      const userId = request.session.userId;
-
+    const userId = request.session.userId;
+    sockets.delete(ws);
     console.log('userId:' + userId + ' ' +  dataArray.length );
 
     map.delete(userId);
@@ -301,18 +310,37 @@ wss.on('connection', function (ws, request) {
        console.log(' tmpstr ' + tmpstr );
       if(tmpstr.localeCompare (userId) != 0){ // different
         dataArraytemp.push(dataArray[i]);    
-    }
-    else{
-      teamname = dataArray[i][2];
-      message = dataArray[i][9];
-    }
-  }
+      }
+     else{
+        teamname = dataArray[i][2];
+        message = dataArray[i][9];
+      }
+   }
     dataArray = dataArraytemp;
     messageForAll(teamname,'CLOSE' , message)
    // messageForAll(teamname,'CLOSE' )
    // console.log(' ws close map.delete(userId); l=' + map.length + ' ' +  dataArray.length  + ' ' + message);
+   update();
   });
+ // tell everyone a client joined
+ update();
 });
+
+function update() {
+  // send an updated client count to every open socket.
+  sockets.forEach(ws => ws.send(JSON.stringify({
+    type: 'count',
+    count: sockets.size
+  })));
+}
+ 
+// http://expressjs.com/en/starter/static-files.html
+app.use(express.static('public'));
+
+// http://expressjs.com/en/starter/basic-routing.html
+//app.get('/', function(request, response) {
+//  response.sendFile(__dirname + '/views/index.html');
+//});
 
 
 function findClients(id) {
