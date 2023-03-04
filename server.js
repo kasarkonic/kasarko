@@ -48,7 +48,7 @@ console.log(`Server running at ${hostname}:${port}`);
 //const wss = new WebSocket.Server({ server });
 const wss = new WebSocket.Server({ 
     path: "/wss",
-    server,
+    server: server,
   });
 
 //var dataArray = new Array[dArray];
@@ -71,7 +71,7 @@ app.post('/login', function (req, res) {
   console.log("post Request " + req.url);
   console.log("__dirname:    " + __dirname);
   console.log(__dirname + '/images' + req.url);
-  console.log("post Request " + req.url + " "+ req.hostname + " "+ req.ip + " "+ req.path + " "+ req.query);
+  console.log("post Request " + req.url + " , "+ req.hostname + " , "+ req.ip + " , "+ req.path + " "+ req.query);
 
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');

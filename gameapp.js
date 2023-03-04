@@ -1,8 +1,8 @@
 // vers 0.0.1
 
-
+// https://qlik.dev/tutorials/build-a-simple-web-app
 //(function () {
-  const WebSocket = require('ws');
+
    const head = document.querySelector('#head');
    const body = document.querySelector('#body');
    let fonsImg;
@@ -986,14 +986,26 @@ function move(element, direction, distance=20) {
    //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
    //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
    
-   
+   /*
    const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/ws';
       const ws = new WebSocket(serverAddress, {
         headers: {
             "user-agent": "Mozilla"
         }
       });
-   
+   */
+      const BASE_URL = document.baseURI;
+      const path = new URL(BASE_URL).pathname.replace('/', '');
+      
+      let url = BASE_URL.replace('http', 'ws').replace(path, '') ;
+      
+      console.log("url", BASE_URL, url, path);
+      const ws = new WebSocket(url);
+
+
+
+
+
   //const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
   //const ws = new WebSocket(`${protocol}://${location.host}`);
   //const ws = new WebSocket(serverAddres,`${protocol}://0.0.0.0`);
