@@ -155,7 +155,7 @@ server.on('upgrade', function (request, socket, head) {
 
 wss.on('connection', function connection(ws) {
   console.log(' WSS.connection');
-  sockets.add(WebSocket);
+  sockets.add(ws);
 
   const userId = request.session.userId;
   map.set(userId, ws);
