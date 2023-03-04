@@ -220,6 +220,24 @@ app.delete('/logout', function (request, response) {
 server.on('upgrade', function (request, socket, head) {
   console.log('Parsing session from request...');
 
+  var validationResult = validateCookie(req.headers.cookie);
+  if (validationResult) {
+
+    console.log('validationResult' + validationResult);
+
+    //...
+  } else {
+    socket.write('HTTP/1.1 401 Web Socket Protocol Handshake\r\n' +
+                 'Upgrade: WebSocket\r\n' +
+                 'Connection: Upgrade\r\n' +
+                 '\r\n');
+                 socket.close();
+                 socket.destroy();
+                 return;
+  }
+
+
+
   sessionParser(request, {}, () => {
     if (!request.session.userId) {
       socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');

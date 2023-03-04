@@ -1363,20 +1363,21 @@ function move(element, direction, distance=20) {
    //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
    //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
    
-   /*
+   
    const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
        ws = new WebSocket(serverAddress, {
         headers: {
             "user-agent": "Mozilla"
         }
       });
-   */
+   
+   /*
       var socket = window.socket("/channel", {
         reconnect: true,
         debug: false
       });
 
-
+      */
 
 
   const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
