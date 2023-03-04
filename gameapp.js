@@ -55,13 +55,6 @@
   
    let teamimgArray = new Array();   // id,ststus,x,y
   
-   //const teamediv = document.createElement("div");
-  // enum Cmd {
-  //   TEAMNAME,
-  //   ANSWER,
-  //   LOG,
-  // }
-
    //const string_map = new Map('id','name','kas','kad','ar_ko','kur','ko_dara','kapec');
    const string_map = new Map;
 
@@ -72,6 +65,25 @@
    var timcount = 0;
    let myInterval = setInterval(intervalFunction, 10);
 
+   let s = new FriendlyWebSocket();
+
+   s.on("message", data => {
+    console.log("s.message:", data);
+    try {
+      // this example expects every message to be in JSON format.
+      data = JSON.parse(event.data);
+    } catch (e) {
+      console.warn("s.invalid message from server", data);
+    }
+    // if it's a message about the client count, update the elements
+    if (data.type === "count") {
+      document.querySelector(".count").innerText = data.count;
+    }
+  });
+
+
+
+///////////////////////////////////////////////////
 
   function createteam(){
 
@@ -483,31 +495,14 @@
   fetch('/login', { method: 'POST', credentials: 'same-origin' })
   .then(handleResponse)
   .then(showMessage)
-  //.then(createSocket)
+ // .then(createSocket)
   .catch(function (err) {
     showMessage(err.message);
   });
 }
 
  function createSocket(){
-   // if (ws) {
-   //   ws.onerror = ws.onopen = ws.onclose = null;
-   //   console.log('ws.close() ');
-   //    ws.close();
-   //  
- 
-   //const serverAddres = "wss://kasarko.glitch.me/";
-   //ws = new WebSocket(const serverAddres = "wss://kasarko.glitch.me/";`);
-   //ws = new WebSocket(serverAddres, {"User_Agent": "Mozilla"});						// only for GLICH
-   
-   /*
-   const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/ws';
-      const ws = new WebSocket(serverAddress, {
-        headers: {
-            "user-agent": "Mozilla"
-        }
-      });
-   */
+
       const BASE_URL = document.baseURI;
       const path = new URL(BASE_URL).pathname.replace('/', '');
       
@@ -516,12 +511,11 @@
       console.log("url=>", BASE_URL," U=>", url," P=>", path);
 
     const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
-    ws = new WebSocket(serverAddress, {
+    this.ws = new WebSocket(serverAddress, {
      headers: {
          "user-agent": "Mozilla"
      }
    });
-  }
 /*
    var socket = window.socket("/channel", {
      reconnect: true,
@@ -529,33 +523,6 @@
    });
 
    */
-
-
-
-  //const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
-  //const ws = new WebSocket(`${protocol}://${location.host}`);
-  //const ws = new WebSocket(serverAddres,`${protocol}://0.0.0.0`);
-
-  // ws = new WebSocket(`ws://${location.host}`);
-   //const serverAddress = 'ws://${location.host}';
-  //const serverAddress = 'wss://kasarko.glitch.me';
-   //const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
-
-   //id = data.id;
-
-  //AAAA
-  // var serverAddress = `wss://${location.host}/wss?id=${id}`;
-
-
-   // ws = new WebSocket(serverAddress, {
-  //   headers: {
-  //       "user-agent": "Mozilla"
-  //   }
-  // });
-
-
-
-   
 
 
     ws.onmessage = function(event) {
@@ -626,7 +593,7 @@
          displayResult(pageNr);
        //}
      }
-
+    }
      ws.onerror = function () {
        showMessage('WebSocket error');
      }
@@ -640,8 +607,10 @@
        showMessage('WebSocket connection closed');
        ws = null; 
      }
-    }
+  }
+  
 
+    
  function sendMessToServer(mes) {
    if (!ws) {
      showMessage('No WebSocket connection');
@@ -868,13 +837,4 @@
  }
 //})();
 
-
-  fetch('/login', { method: 'POST', credentials: 'same-origin' })
-  .then(handleResponse)
-  .then(showMessage)
-  //.then(createSocket)
-  .catch(function (err) {
-    showMessage(err.message);
-  });
-}
 
