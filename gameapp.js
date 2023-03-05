@@ -78,6 +78,7 @@
     // if it's a message about the client count, update the elements
     if (data.type === "count") {
       document.querySelector(".count").innerText = data.count;
+      console.log("s.message: type count ", data.count);
     }
   });
 
@@ -495,7 +496,7 @@
   fetch('/login', { method: 'POST', credentials: 'same-origin' })
   .then(handleResponse)
   .then(showMessage)
- // .then(createSocket)
+  .then(createSocket)
   .catch(function (err) {
     showMessage(err.message);
   });
@@ -610,7 +611,7 @@
   }
   
 
-    
+  /*  
  function sendMessToServer(mes) {
    if (!ws) {
      showMessage('No WebSocket connection');
@@ -618,6 +619,15 @@
    }
    ws.send(mes);
  }
+*/
+function sendMessToServer(mes) {
+  if (!s) {
+    showMessage('No WebSocket connection');
+      return;
+  }
+  s.send(mes);
+}
+
 
 
  input_btn_new_game.onclick = function(){

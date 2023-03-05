@@ -34,7 +34,7 @@ class FriendlyWebSocket {
       this.connected = true;
       this._emit('open');
       // this isn't necessary, but it's polite to say hi!
-      this.socket.send("Hello Server!");
+      //this.socket.send("Hello Server!");
     });
 
     this.socket.addEventListener("close", event => {

@@ -6,8 +6,8 @@ const session = require("express-session");
 const http = require('http');
 const uuid = require('uuid');
 
-//const { WebSocketServer } = require('ws');
-const ws = require('ws');
+const WebSocketServer = require('ws');
+//const ws = require('ws');
 const app = express();
 
 
@@ -43,8 +43,7 @@ server.listen(port, hostname);
 console.log(`Server running at ${hostname}:${port}`);
 //
 // Create a WebSocket server completely detached from the HTTP server.
-//const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-const wss = new ws.Server({ server });
+const wss = new WebSocketServer.Server({ server });
 //const wss = new WebSocket.Server({ 
 //    path: "/wss",
 //    server: server,
@@ -58,7 +57,7 @@ let sockets = new Set();
 
 console.log('////--------------------------------------');
 //setTimeout(timerFunction, 1000);
-setInterval(timerFunction, 1000);
+// setInterval(timerFunction, 1000);
 
 
 
@@ -75,7 +74,7 @@ app.post('/login', function (req, res) {
   console.log("post Request " + " , "+ req.hostname + " , "+ req.ip + " , "+ req.path );
   const id = uuid.v4();
   console.log('Updating HTTP session for user ${'+ id + '}');
-  req.session.userId = id;
+  //req.session.userId = id;
   res.send({ result: 'OK', message: 'Session updated' });
 });
 
@@ -99,53 +98,46 @@ app.get('/gameapp.js', function(req, res) {
 
 
 
-app.delete('/logout', function (request, response) {
-  const ws = map.get(request.session.userId);
+app.delete('/logout', function (req, response) {
+  const userId = req.headers['sec-websocket-key']; 
+  const ws = map.get(req.session.userId);
 
   console.log('Destroying session');
-  request.session.destroy(function () {
+  req.session.destroy(function () {
     if (ws) ws.close();
     response.send({ result: 'OK', message: 'Session destroyed' });
   });
 });
-    /*
-    server.on('upgrade', function (request, socket, head) {
-      console.log('Parsing session from request...', request.url);
+    
+    server.on('upgrade', function (req, socket, head) {
+      console.log('Parsing session from request...', req.url);
+     // socket.on('error', onSocketError);
+/*
+      sessionParser(req, {}, () => {
+        if (!req.session.userId) {
+          socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+          socket.destroy();
+          console.log('socket.destroy()');
+          return;
+        }
+       // socket.removeListener('error', onSocketError);
 
-      wss.handleUpgrade(request, socket, head, ws => {
-     
-      console.log('Session is parsed!');
-      wss.emit('connection', ws, request)
-    })
-  }
-
-*/
-
-
-
-
-
-  sessionParser(request, {}, () => {
-    if (!request.session.userId) {
-      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
-      socket.destroy();
-      return;
-    }
-
-    console.log('Session is parsed!');
-
-   //   wss.handleUpgrade(request, socket, head, function (wss) {
-   //     wss.emit('connection', wss, request);
-   //     console.log('emit connection');
-   //   });
-  });
-//});
+        wss.handleUpgrade(req, socket, head, function (ws) {
+          console.log('wss.emot connection!');
+          wss.emit('connection', ws, req);
+        });
+      });
+      */
+    });
 
 
-wss.on('connection', function connection(ws) {
-  console.log(' WSS.connection');
+
+wss.on('connection', function connection(ws,req) {
+  const userId = req.headers['sec-websocket-key']; 
+  console.log(' WSS.connection ', userId );
   sockets.add(ws);
 
+  /*
   const userId = setInterval(function () {
     ws.send(JSON.stringify(process.memoryUsage()), function () {
       //
@@ -153,16 +145,10 @@ wss.on('connection', function connection(ws) {
       //
     });
   }, 1000);
+  */
   console.log('iuserId  ???  ', userId);
 
-
-
-
-
-
-
-
-  userId = request.session.userId;
+//  userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
 
@@ -171,6 +157,7 @@ wss.on('connection', function connection(ws) {
 
 
   ws.on('message', function incoming(message) {
+    const userId = req.headers['sec-websocket-key']; 
     console.log("-------------------- New message --------------------");
     console.log(`Received message -->${message}<--`);
     const strObj = JSON.parse(message);
@@ -299,7 +286,8 @@ wss.on('connection', function connection(ws) {
 
   
   ws.on('close', function (ws, request) {
-    const userId = request.session.userId;
+    //const userId = request.session.userId;
+    const userId = req.headers['sec-websocket-key']; 
     sockets.delete(ws);
     console.log('userId:' + userId + ' ' +  dataArray.length );
 
