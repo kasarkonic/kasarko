@@ -85,6 +85,33 @@
     }
   });
 
+  s.on("open", data => {
+    console.log("s.message1:", data);
+    try {
+      // this example expects every message to be in JSON format.
+      data = JSON.parse(event.data);
+      showMessage('websocket connection open');
+    } catch (e) {
+      console.warn("s.invalid message from server", data);
+    }
+    // if it's a message about the client count, update the elements
+
+  });
+  s.on("close", data => {
+    console.log("s.message1:", data);
+    try {
+      // this example expects every message to be in JSON format.
+      data = JSON.parse(event.data);
+      showMessage('websocket connection close');
+    } catch (e) {
+      console.warn("s.invalid message from server", data);
+    }
+    // if it's a message about the client count, update the elements
+
+  });
+
+
+
 
 
 ///////////////////////////////////////////////////

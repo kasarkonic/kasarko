@@ -50,8 +50,15 @@ class FriendlyWebSocket {
       // tell the listeners about it
       this._emit('message', event.data);
     });
+    this.socket.addEventListener("open", event => {
+      // tell the listeners about it
+      this._emit('open', event.data);
+    });
+    this.socket.addEventListener("close", event => {
+      // tell the listeners about it
+      this._emit('close', event.data);
+    });
   }
-
   _emit(type, data) {
     console.log("_listeners[type]  ", type);
     this._listeners[type].forEach(handler => {
