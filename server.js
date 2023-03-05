@@ -146,7 +146,23 @@ wss.on('connection', function connection(ws) {
   console.log(' WSS.connection');
   sockets.add(ws);
 
-  const userId = request.session.userId;
+  const userId = setInterval(function () {
+    ws.send(JSON.stringify(process.memoryUsage()), function () {
+      //
+      // Ignore errors.
+      //
+    });
+  }, 1000);
+  console.log('iuserId  ???  ', userId);
+
+
+
+
+
+
+
+
+  userId = request.session.userId;
   map.set(userId, ws);
   console.log(ws + map.get(userId));
 
