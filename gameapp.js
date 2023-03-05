@@ -68,7 +68,9 @@
    let s = new FriendlyWebSocket();
 
    s.on("message", data => {
-    console.log("s.message:", data);
+    console.log("s.message1:", data);
+    console.log("s.message2:", data.type);
+    console.log("s.message3:", data.count);
     try {
       // this example expects every message to be in JSON format.
       data = JSON.parse(event.data);

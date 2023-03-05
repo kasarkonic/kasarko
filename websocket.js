@@ -53,29 +53,37 @@ class FriendlyWebSocket {
   }
 
   _emit(type, data) {
-    this._listeners[type].forEach(handler => {
+   // this._listeners[type].forEach(handler => {
+      console.log("_listeners[type]", type,data);
+      console.log("handler handler", data);
       // don't let one listener spoil the batch
       try {
         handler(data);
       } catch (e) {
         console.warn("error in message handler", e);
       }
-    });
+   // });
   }
   
+
+
+
   on(type, handler) {
+    console.log("handler on", type);
     if (type in this._listeners) {
       this._listeners[type].add(handler);
     }
   }
 
   off(type, handler) {
+    console.log("handler off", type);
     if (type === "message") {
       this.messageHandlers.delete(handler);
     }
   }
 
   send(message) {
+    console.log("handler send", type);
     if (this.connected) {
       this.socket.send(message);
     }
