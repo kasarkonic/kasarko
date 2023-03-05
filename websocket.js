@@ -70,14 +70,14 @@ class FriendlyWebSocket {
       }
     });
   }
-  
+  /*
   on(type, handler) {
     console.log("handler on type", type);
     if (type in this._listeners) {
       this._listeners[type].add(handler);
     }
   }
-
+*/
   off(type, handler) {
     console.log("handler off", type);
     if (type === "message") {

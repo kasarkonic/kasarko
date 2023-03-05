@@ -150,8 +150,8 @@ wss.on('connection', function connection(ws,req) {
 
 //  userId = request.session.userId;
   map.set(userId, ws);
-  console.log(ws + map.get(userId));
-
+  console.log('ws + userId', ws + map.get(userId));
+  console.log(' add sockets.size', sockets.size);
 
 
 
@@ -286,12 +286,17 @@ wss.on('connection', function connection(ws,req) {
 
   
   ws.on('close', function (ws, request) {
-    //const userId = request.session.userId;
     const userId = req.headers['sec-websocket-key']; 
-    sockets.delete(ws);
-    console.log('userId:' + userId + ' ' +  dataArray.length );
-
+    console.log('ws.on(close  ' + userId  );
+    //console.log(setIter);
+    //console.log(' del sockets.size', sockets.size,map.size);
+    sockets.delete(ws); // nedarbojas ??????
     map.delete(userId);
+
+    console.log(' del map.size',map.size);
+    //console.log('userId: ' + userId + ' ' +  dataArray.length );      
+  
+    
     //var dataArraytemp = new Array('1','1','','','','','','','','','');
     var dataArraytemp = [];
     dataArraytemp[0] = dataArray[0];
