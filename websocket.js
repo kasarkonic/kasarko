@@ -32,7 +32,7 @@ class FriendlyWebSocket {
     this.socket.addEventListener("open", event => {
       console.log("connected!");
       this.connected = true;
-      this._emit('open');
+      this._emit('open', event.data);
       // this isn't necessary, but it's polite to say hi!
       //this.socket.send("Hello Server!");
     });
@@ -41,10 +41,17 @@ class FriendlyWebSocket {
       console.log("disconnected");
       this.connected = false;
       // the server went away, try re-connecting in 2 seconds.
-      this._emit('close');
-      setTimeout(() => this.connect(), 2000);
+      this._emit('close', event.data);
+      //setTimeout(() => this.connect(), 2000);
     });
-
+    this.socket.addEventListener("message", event => {
+      console.log("websocket receive message");
+      //this.connected = false;  ????????????????????
+      // the server went away, try re-connecting in 2 seconds.
+      this._emit('message', event.data);
+      //setTimeout(() => this.connect(), 2000);
+    });
+/*
     // Listen for messages
     this.socket.addEventListener("message", event => {
       // tell the listeners about it
@@ -58,6 +65,7 @@ class FriendlyWebSocket {
       // tell the listeners about it
       this._emit('close', event.data);
     });
+    */
   }
   _emit(type, data) {
     console.log("_listeners[type]  ", type);
@@ -70,14 +78,14 @@ class FriendlyWebSocket {
       }
     });
   }
-  /*
+  
   on(type, handler) {
-    console.log("handler on type", type);
+    //console.log("handler on type", type);
     if (type in this._listeners) {
       this._listeners[type].add(handler);
     }
   }
-*/
+
   off(type, handler) {
     console.log("handler off", type);
     if (type === "message") {

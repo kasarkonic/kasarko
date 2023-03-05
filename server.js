@@ -146,14 +146,11 @@ wss.on('connection', function connection(ws,req) {
     });
   }, 1000);
   */
-  console.log('iuserId  ???  ', userId);
+ 
 
-//  userId = request.session.userId;
   map.set(userId, ws);
-  console.log('ws + userId', ws + map.get(userId));
-  console.log(' add sockets.size', sockets.size);
-
-
+ 
+  console.log(' add sockets.size', sockets.size,map.size);
 
 
   ws.on('message', function incoming(message) {
@@ -205,6 +202,7 @@ wss.on('connection', function connection(ws,req) {
          // map.get(userId).send('MES,You are joined  in ' + strObj.teamName + ' team.');
          // messageForAll(strObj.teamName,'MES','There are ' + ncount + '. members in ' + strObj.teamName + ' team.');
           messageForAll(strObj.teamName,'MEMB', ncount);
+          console.log('messageForAll MEMB: ' + ncount );
         }
 
         break;
@@ -220,16 +218,18 @@ wss.on('connection', function connection(ws,req) {
         console.log(answers +' from ' +  (teammateCnt - answers) + ' + from '+ teammateCnt )
 
         messageForAll(strObj.teamName,'FINISH', answers);
+        console.log('messageForAll FINISHES: ');
 
         if(answers == teammateCnt){  // receive from all players
           messageForAll(strObj.teamName,'MES','All player finish');
-
+          console.log('messageForAll MES: ' + 'All player ');
         //send array !!!
         sendDataArrayToClient(strObj.teamName);
 
         }
         else{
           messageForAll(strObj.teamName,'MES','There are ' + (teammateCnt - answers) + ' player not finish yet');
+          console.log('messageForAll MES: ' + 'There are ');
         }
          //retArray[0] = answers;
         // retArray[1] = teammateCnt;
@@ -248,6 +248,7 @@ wss.on('connection', function connection(ws,req) {
 
         case 'DEVELOP':
           messageForAll(strObj.teamName,'MEMB', ncount);
+          console.log('messageForAll MEMB: ' + message);
           const resulttxt = {
             cmd:'DEVELOP',
             id:'userId',
@@ -316,8 +317,8 @@ wss.on('connection', function connection(ws,req) {
    }
     dataArray = dataArraytemp;
     messageForAll(teamname,'CLOSE' , message)
-   // messageForAll(teamname,'CLOSE' )
-   // console.log(' ws close map.delete(userId); l=' + map.length + ' ' +  dataArray.length  + ' ' + message);
+    //messageForAll(teamname,'CLOSE' )
+    console.log('messageForAll CLOSE: ' + message);
    update();
   });
  // tell everyone a client joined
@@ -326,10 +327,10 @@ wss.on('connection', function connection(ws,req) {
 
 function update() {
   // send an updated client count to every open socket.
-  sockets.forEach(ws => ws.send(JSON.stringify({
-    type: 'count',
-    count: sockets.size
-  })));
+  //sockets.forEach(ws => ws.send(JSON.stringify({
+  //  type: 'count',
+  //  count: sockets.size
+ // })));
 }
  
 // http://expressjs.com/en/starter/static-files.html
@@ -422,7 +423,7 @@ function createJson(trCmd, mes = null){
   time:''};
 
   let jsonObj = JSON.stringify(resulttxt);
-  console.log(' createJson(' + trCmd + ', '+ mes + ') '+ jsonObj )
+  console.log(' createJson( ' + trCmd + ', '+ mes + ') '+ jsonObj )
   return jsonObj;
 }
 

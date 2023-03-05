@@ -68,16 +68,70 @@
    let s = new FriendlyWebSocket();
 
    s.on("message", data => {
-    console.log("s.message1:", data);
-    console.log("s.message2:", data.type);
-    console.log("s.message3:", data.count);
+    console.log('s.on message ');
+    let strObj;
     try {
       // this example expects every message to be in JSON format.
-      data = JSON.parse(event.data);
-      console.log("s.message4:", data.cmd);
+      strObj = JSON.parse(event.data);
+      let messageLength = Object.keys(strObj).length;
+      console.log('strObj.cmd ' + strObj.cmd +', '+ messageLength);
+      if(messageLength != 11){    // error
+        showMessage('Error receive message lenght: ' + messageLength);
+          return;
+      }
+
     } catch (e) {
       console.warn("s.invalid message from server", data);
     }
+
+    if(strObj.cmd === 'MES'){
+      //alert(`showMessage ok ok ok ${strObj.message}`);
+      showMessage(strObj.message);
+      console.log('MES ==> ' + strObj.message);
+    }
+    if(strObj.cmd === 'FINISH'){
+      //alert(`showMessage ok ok ok ${strObj.message}`);
+      console.log('FINISH ==> ' + strObj.message);
+      membersFinished(strObj.message);
+    }
+
+    if(strObj.cmd === 'MEMB'){
+      // showMessage('FINISH ==> ' + strObj.message);
+        let cnt = strObj.message -  teamimgArray.length;
+        console.log('MES ==> ' + strObj.message + ' ' + cnt);
+        while (cnt > 0) {
+        console.log('cnt ==> ' + cnt);
+          createteam();
+          cnt--;
+        }
+      }
+
+      if(strObj.cmd === 'CLOSE'){
+        console.log('CLOSE ==> ' + strObj.mes + ' ' + strObj.cmd);
+        let mes = strObj.message;
+        deleteMember(mes);
+      }
+
+      if(strObj.cmd === 'RESULT'){
+        // showMessage('RESULT msg -> ' + strObj.message);
+        //var dArray = new Array('cmd','id','team_name','quest_kas','quest_kad','quest_ar_ko','quest_kur','quest_ko_dara','quest_kapec',message,time);
+          let strObjArray = new Array();
+          //strObjArray[0] = strObj.message;
+   
+          strObjArray[0] = strObj.quest_kas;
+          strObjArray[1] = strObj.quest_kad;
+          strObjArray[2] = strObj.quest_ar_ko;
+          strObjArray[3] = strObj.quest_kur;
+          strObjArray[4] = strObj.quest_ko_dara;
+          strObjArray[5] = strObj.quest_kapec;
+          allAnswArray.push(strObjArray);
+   
+            displayResult(pageNr);
+          }
+
+
+
+
     // if it's a message about the client count, update the elements
     if (data.type === "count") {
       document.querySelector(".count").innerText = data.count;
@@ -308,7 +362,7 @@
     }
 
     if (direction=="up") {
-      var topValue = elStyle.getPropertyVacreateSocketlue(topOrLeft).replace("px", "");
+      var topValue = elStyle.getPropertyValue(topOrLeft).replace("px", "");
       element.style.top = (Number(topValue) - distance) + "px";
     }
      if (direction=="left") {
@@ -554,7 +608,8 @@
 
    */
 
-
+//AAA
+ 
     ws.onmessage = function(event) {
      console.log(`Rec. msg from server ${event.data}`);
      //alert(`Rec. msg from server ${event.data}`);
