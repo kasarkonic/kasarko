@@ -74,6 +74,7 @@
     try {
       // this example expects every message to be in JSON format.
       data = JSON.parse(event.data);
+      console.log("s.message4:", data.cmd);
     } catch (e) {
       console.warn("s.invalid message from server", data);
     }

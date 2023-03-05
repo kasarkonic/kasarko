@@ -14,7 +14,7 @@ class FriendlyWebSocket {
     this._listeners = {
       message: new Set(),
       open: new Set(),
-      close: new Set()
+      close: new Set(),
     };
   }
 
@@ -53,23 +53,19 @@ class FriendlyWebSocket {
   }
 
   _emit(type, data) {
-   // this._listeners[type].forEach(handler => {
-      console.log("_listeners[type]", type,data);
-      console.log("handler handler", data);
+    console.log("_listeners[type]  ", type);
+    this._listeners[type].forEach(handler => {
       // don't let one listener spoil the batch
       try {
         handler(data);
       } catch (e) {
         console.warn("error in message handler", e);
       }
-   // });
+    });
   }
   
-
-
-
   on(type, handler) {
-    console.log("handler on", type);
+    console.log("handler on type", type);
     if (type in this._listeners) {
       this._listeners[type].add(handler);
     }
@@ -83,9 +79,10 @@ class FriendlyWebSocket {
   }
 
   send(message) {
-    console.log("handler send", type);
+    console.log("handler message");
     if (this.connected) {
       this.socket.send(message);
     }
   }
+
 }
