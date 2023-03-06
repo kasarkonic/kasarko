@@ -387,7 +387,7 @@
 
     label_team_name = document.createElement("label");
     label_team_name.innerHTML = "Team name";  
-    label_team_name.style.cssText ='position:fixed;top:17%;left:44%;width:17%;height:%;opacity:1;font-size:2vw;';
+    label_team_name.style.cssText ='position:fixed;top:17%;left:44%;width:17%;height:%;opacity:1;font-size:3vw;';
 
     label_info_team_name = document.createElement("label");
     label_info_team_name.innerHTML = "Team name";
@@ -408,9 +408,9 @@
     label_quest_kas.style.cssText ='position:fixed;top:19%;left:25%;width:100%;height:100%;opacity:1;font-size:2vw;;';
     
     input_btn_submTeam = document.createElement("BUTTON");
-    input_btn_submTeam.innerHTML = "Send to server team";  
+    input_btn_submTeam.innerHTML = "Connect to team";  
     //input_btn_submTeam.setAttribute('id', 'btn_submTeam'); 
-    input_btn_submTeam.style.cssText = 'position:fixed;top:41%;left:35%;width:30%;height:7%;opacity:1;;';
+    input_btn_submTeam.style.cssText = 'position:fixed;top:41%;left:35%;width:30%;height:7%;opacity:1;font-size:3vw;';
 
 
 
@@ -423,7 +423,7 @@
 
     label_quest_kad = document.createElement("label");
     label_quest_kad.innerHTML = "Kad?";  
-    label_quest_kad.style.cssText ='position:fixed;top:28%;left:25%;width:100%;height:100%;opacity:1;font-size:2vw;;';
+    label_quest_kad.style.cssText ='position:fixed;top:28%;left:25%;width:100%;height:100%;opacity:1;font-size:3vw;;';
     
     input_quest_kad = document.createElement("TEXTAREA");
     input_quest_kad.setAttribute("type", "text");
@@ -434,7 +434,7 @@
     
     label_quest_ar_ko = document.createElement("label");
     label_quest_ar_ko.innerHTML = "Ar ko?";  
-    label_quest_ar_ko.style.cssText ='position:fixed;top:38%;left:25%;width:100%;height:100%;opacity:1;font-size:2vw;;';
+    label_quest_ar_ko.style.cssText ='position:fixed;top:38%;left:25%;width:100%;height:100%;opacity:1;font-size:3vw;;';
     
     input_quest_ar_ko = document.createElement("TEXTAREA");
     input_quest_ar_ko.setAttribute("type", "text");
@@ -444,7 +444,7 @@
 
     label_quest_kur = document.createElement("label");
     label_quest_kur.innerHTML = "Kur?";  
-    label_quest_kur.style.cssText ='position:fixed;top:46%;left:25%;width:100%;height:100%;opacity:1;font-size:2vw;;';
+    label_quest_kur.style.cssText ='position:fixed;top:46%;left:25%;width:100%;height:100%;opacity:1;font-size:3vw;;';
     
     input_quest_kur = document.createElement("TEXTAREA");
     input_quest_kur.setAttribute("type", "text");
@@ -454,7 +454,7 @@
 
     label_quest_ko_dara = document.createElement("label");
     label_quest_ko_dara.innerHTML = "Ko dara?";  
-    label_quest_ko_dara.style.cssText ='position:fixed;top:55%;left:25%;width:100%;height:100%;opacity:1;font-size:2vw;;';
+    label_quest_ko_dara.style.cssText ='position:fixed;top:55%;left:25%;width:100%;height:100%;opacity:1;font-size:3vw;;';
     
     input_quest_ko_dara = document.createElement("TEXTAREA");
     input_quest_ko_dara.setAttribute("type", "text");
@@ -464,7 +464,7 @@
 
     label_quest_kapec = document.createElement("label");
     label_quest_kapec.innerHTML = "Kāpēc?";  
-    label_quest_kapec.style.cssText ='position:fixed;top:64%;left:25%;width:100%;height:100%;opacity:1;font-size:2vw;;';
+    label_quest_kapec.style.cssText ='position:fixed;top:64%;left:25%;width:100%;height:100%;opacity:1;font-size:3vw;;';
     
     input_quest_kapec = document.createElement("TEXTAREA");
     input_quest_kapec.setAttribute("type", "text");
@@ -473,7 +473,7 @@
     input_quest_kapec.style.cssText ='position:fixed;top:63%;left:35%;width:40%;height:5%;opacity:1;;';
 
     input_btn_toServer = document.createElement("BUTTON");
-    input_btn_toServer.innerHTML = "Send to server";  
+    input_btn_toServer.innerHTML = "Connect to team";  
        // input_btn_toServer.setAttribute('id', 'btn_toServer'); 
     input_btn_toServer.style.cssText = 'position:fixed;top:71%;left:38%;width:30%;height:7%;opacity:1;;';
 
@@ -594,7 +594,8 @@
       
       console.log("url=>", BASE_URL," U=>", url," P=>", path);
 
-    const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
+    //const serverAddress = 'wss://upbeat-sunrise-cinema.glitch.me/';
+    const serverAddress = 'wss://kasarko.glitch.me/';
     this.ws = new WebSocket(serverAddress, {
      headers: {
          "user-agent": "Mozilla"
