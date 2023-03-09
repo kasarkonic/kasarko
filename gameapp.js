@@ -130,8 +130,6 @@
           }
 
 
-
-
     // if it's a message about the client count, update the elements
     if (data.type === "count") {
       document.querySelector(".count").innerText = data.count;
@@ -140,11 +138,11 @@
   });
 
   s.on("open", data => {
-    console.log("websocket connection open");
+    console.log("s websocket connection open");
     try {
       // this example expects every message to be in JSON format.
     //  data = JSON.parse(event.data);
-      showMessage('websocket connection open');
+      showMessage('s websocket connection open');
     } catch (e) {
       console.warn("s.invalid message from server", data);
     }
@@ -162,9 +160,6 @@
     // if it's a message about the client count, update the elements
 
   });
-
-
-
 
 
 ///////////////////////////////////////////////////
@@ -683,12 +678,12 @@
      }
 
      ws.onopen = function () {
-      console.log('WebSocket connection established');
-       sendMessToServer(createJson('LOG','WebSocket connection established'));
+      console.log('ws WebSocket connection established');
+       sendMessToServer(createJson(ws 'LOG','WebSocket connection established'));
      }
 
      ws.onclose = function () {
-       showMessage('WebSocket connection closed');
+       showMessage('ws WebSocket connection closed');
        ws = null; 
      }
   }
