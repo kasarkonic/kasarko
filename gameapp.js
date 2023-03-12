@@ -42,6 +42,7 @@
    let menb;
    let ws;
 
+   let clientId; 
    let jsonObj;
    let allAnswArray = new Array();
    let pageNr = 0;
@@ -59,16 +60,23 @@
    const string_map = new Map;
 
    window.onload = initPage();
-   login();
+  
    //myInterval1 = setTimeout(timeoutFunction, 2000);
+
+
+
 
    var timcount = 0;
    let myInterval = setInterval(intervalFunction, 10);
+   s = new FriendlyWebSocket();
 
-   let s = new FriendlyWebSocket();
+   function login(){
+     s.createWebSocket();
+    }
+  /*
 
-   s.on("message", data => {
-    console.log('s.on message ');
+  s.on("message", data => {
+    console.log('on message ');
     let strObj;
     try {
       // this example expects every message to be in JSON format.
@@ -133,35 +141,35 @@
     // if it's a message about the client count, update the elements
     if (data.type === "count") {
       document.querySelector(".count").innerText = data.count;
-      console.log("s.message: type count ", data.count);
+      console.log("message: type count ", data.count);
     }
   });
 
   s.on("open", data => {
-    console.log("s websocket connection open");
+    console.log("websocket connection open");
     try {
       // this example expects every message to be in JSON format.
     //  data = JSON.parse(event.data);
-      showMessage('s websocket connection open');
+      showMessage('websocket connection open');
     } catch (e) {
-      console.warn("s.invalid message from server", data);
+      console.warn("invalid message from server", data);
     }
   });
 
   s.on("close", data => {
-    console.log("s.close.message1:", data);
+    console.log("close.message1:", data);
     try {
       // this example expects every message to be in JSON format.
       data = JSON.parse(event.data);
-      showMessage('websocket connection close');
+      showMessage(' websocket connection close');
     } catch (e) {
-      console.warn("s.invalid message from server", data);
+      console.warn("invalid message from server", data);
     }
     // if it's a message about the client count, update the elements
 
   });
 
-
+*/
 ///////////////////////////////////////////////////
 
   function createteam(){
@@ -563,7 +571,7 @@
  //AAAAA
 
 
- function login(){
+ function login_old(){
   console.log('location:  '+ location.host + '  ,  ' );
   const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
 
@@ -572,7 +580,7 @@
   fetch('/login', { method: 'POST', credentials: 'same-origin' })
   .then(handleResponse)
   .then(showMessage)
-  .then(createSocket)
+  .then(createSocket)   // connection
   .catch(function (err) {
     showMessage(err.message);
   });
@@ -678,13 +686,13 @@
      }
 
      ws.onopen = function () {
-      console.log('ws WebSocket connection established');
-       sendMessToServer(createJson(ws 'LOG','WebSocket connection established'));
+      //console.log('ws WebSocket connection established');
+      sendMessToServer(createJson('LOG','WebSocket connection established'));
      }
 
      ws.onclose = function () {
        showMessage('ws WebSocket connection closed');
-       ws = null; 
+       ws = null;
      }
   }
   
@@ -699,11 +707,14 @@
  }
 */
 function sendMessToServer(mes) {
-  if (!s) {
-    showMessage('No WebSocket connection');
-      return;
+  if (s && s.connected == true) {
+    showMessage('WebSocket connect' + s + ' ' + s.connected);
+    s.send(mes);     
   }
-  s.send(mes);
+  else{
+  showMessage('No WebSocket connection' + s + ' ' + s.connected);
+  login();
+  then(s.send(mes));
 }
 
 
@@ -753,6 +764,8 @@ function sendMessToServer(mes) {
         };
 
  input_btn_submTeam.onclick = function(){
+        login();
+        //console.log('login();');
          team = input_team_name.value;
          if(!team || team.length === 0 ) {team = 'Team'};
          label_info_team_name.innerHTML = team;

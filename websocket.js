@@ -9,8 +9,8 @@ class FriendlyWebSocket {
   constructor({ path = "/", url } = {}) {
     this.path = path;
     this.url = url;
-    this.connect();
-    this.connected = false;
+   // this.connect();
+   // this.connected = false;
     this._listeners = {
       message: new Set(),
       open: new Set(),
@@ -18,7 +18,15 @@ class FriendlyWebSocket {
     };
   }
 
-  connect() {
+
+    createWebSocket(){
+      console.log("s.createWebSocket");
+      this.connect();
+      this.connected = trtue;
+  }
+
+
+    connect() {
     let protocol = 'ws://';
     if (location.protocol === 'https:') {
       protocol = 'wss://';
@@ -30,7 +38,7 @@ class FriendlyWebSocket {
 
     // Connection opened
     this.socket.addEventListener("open", event => {
-      console.log("connected!");
+      console.log("s.connected!");
       this.connected = true;
       this._emit('open', event.data);
       // this isn't necessary, but it's polite to say hi!
@@ -38,20 +46,20 @@ class FriendlyWebSocket {
     });
 
     this.socket.addEventListener("close", event => {
-      console.log("disconnected");
+      console.log("s.disconnected");
       this.connected = false;
       // the server went away, try re-connecting in 2 seconds.
       this._emit('close', event.data);
       //setTimeout(() => this.connect(), 2000);
     });
     this.socket.addEventListener("message", event => {
-      console.log("websocket receive message");
+      console.log("s.websocket receive message");
       //this.connected = false;  ????????????????????
       // the server went away, try re-connecting in 2 seconds.
       this._emit('message', event.data);
       //setTimeout(() => this.connect(), 2000);
     });
-/*
+    /*
     // Listen for messages
     this.socket.addEventListener("message", event => {
       // tell the listeners about it
@@ -68,13 +76,13 @@ class FriendlyWebSocket {
     */
   }
   _emit(type, data) {
-    console.log("_listeners[type]  ", type);
+    console.log("s._listeners[type] = ", type);
     this._listeners[type].forEach(handler => {
       // don't let one listener spoil the batch
       try {
         handler(data);
       } catch (e) {
-        console.warn("error in message handler", e);
+        console.warn("s.error in message handler", e);
       }
     });
   }
@@ -87,14 +95,14 @@ class FriendlyWebSocket {
   }
 
   off(type, handler) {
-    console.log("handler off", type);
+    console.log("s.handler off", type);
     if (type === "message") {
       this.messageHandlers.delete(handler);
     }
   }
 
   send(message) {
-    console.log("handler message");
+    console.log("s.handler message connected = " + this.connected);
     if (this.connected) {
       this.socket.send(message);
     }
