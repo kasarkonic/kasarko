@@ -10,7 +10,7 @@ class FriendlyWebSocket {
     this.path = path;
     this.url = url;
    // this.connect();
-   // this.connected = false;
+    this.connected = false;
     this._listeners = {
       message: new Set(),
       open: new Set(),
@@ -22,7 +22,7 @@ class FriendlyWebSocket {
     createWebSocket(){
       console.log("s.createWebSocket");
       this.connect();
-      this.connected = trtue;
+      this.connected = true;
   }
 
 
@@ -54,7 +54,7 @@ class FriendlyWebSocket {
     });
     this.socket.addEventListener("message", event => {
       console.log("s.websocket receive message");
-      //this.connected = false;  ????????????????????
+      this.connected = false;
       // the server went away, try re-connecting in 2 seconds.
       this._emit('message', event.data);
       //setTimeout(() => this.connect(), 2000);

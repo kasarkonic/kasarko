@@ -707,7 +707,7 @@
  }
 */
 function sendMessToServer(mes) {
-  if (s && s.connected == true) {
+  if (s) {
     showMessage('WebSocket connect' + s + ' ' + s.connected);
     s.send(mes);     
   }
@@ -715,8 +715,8 @@ function sendMessToServer(mes) {
   showMessage('No WebSocket connection' + s + ' ' + s.connected);
   login();
   then(s.send(mes));
-}
-
+  }
+}  
 
 
  input_btn_new_game.onclick = function(){
