@@ -101,11 +101,60 @@ class FriendlyWebSocket {
     }
   }
 
-  send(message) {
-    console.log("s.handler message connected = " + this.connected);
-    if (this.connected) {
+ // send(message) {
+ //   console.log("s.handler message connected = " + this.connected);
+ //   if (this.connected) {
+ //     this.socket.send(message);
+ //   }
+ // }
+   // onopen = () => conn.send("Message");
+
+   send(message) {
+    this.waitForConnection(function () {
       this.socket.send(message);
+        if (typeof callback !== 'undefined') {
+          callback();
+        }
+    }, 100);
+
+   }
+
+
+
+  waitForConnection = function (callback, interval) {
+    if (this.socket.readyState === 1) {
+        //callback();
+    } else {
+        var that = this;
+        // optional: implement backoff for interval here
+        setTimeout(function () {
+            that.waitForConnection(callback, interval);
+        }, interval);
     }
-  }
+  };
+
+
 
 }
+
+/*
+this.send = function (message, callback) {
+  this.waitForConnection(function () {
+      ws.send(message);
+      if (typeof callback !== 'undefined') {
+        callback();
+      }
+  }, 1000);
+};
+
+this.waitForConnection = function (callback, interval) {
+  if (ws.readyState === 1) {
+      callback();
+  } else {
+      var that = this;
+      // optional: implement backoff for interval here
+      setTimeout(function () {
+          that.waitForConnection(callback, interval);
+      }, interval);
+  }
+};*/

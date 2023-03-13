@@ -73,7 +73,7 @@
    function login(){
      s.createWebSocket();
     }
-  /*
+  
 
   s.on("message", data => {
     console.log('on message ');
@@ -169,7 +169,7 @@
 
   });
 
-*/
+
 ///////////////////////////////////////////////////
 
   function createteam(){
@@ -570,7 +570,7 @@
 
  //AAAAA
 
-
+/*
  function login_old(){
   console.log('location:  '+ location.host + '  ,  ' );
   const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
@@ -585,8 +585,8 @@
     showMessage(err.message);
   });
 }
-
- function createSocket(){
+*/
+/* function createSocket(){
 
       const BASE_URL = document.baseURI;
       const path = new URL(BASE_URL).pathname.replace('/', '');
@@ -602,15 +602,15 @@
          "user-agent": "Mozilla"
      }
    });
-/*
-   var socket = window.socket("/channel", {
-     reconnect: true,
-     debug: false
-   });
+    
+   //var socket = window.socket("/channel", {
+   //  reconnect: true,
+   //  debug: false
+  // });
 
-   */
+   
 
-//AAA
+    //AAA
  
     ws.onmessage = function(event) {
      console.log(`Rec. msg from server ${event.data}`);
@@ -696,7 +696,7 @@
      }
   }
   
-
+*/
   /*  
  function sendMessToServer(mes) {
    if (!ws) {
@@ -779,12 +779,12 @@ function sendMessToServer(mes) {
 
 
 
-/*
- submitname.onclick = function () {
-    //   login();
-   sendMessToServer(createJson('TEAMNAME')); 
- };
-*/
+      /*
+      submitname.onclick = function () {
+          //   login();
+        sendMessToServer(createJson('TEAMNAME')); 
+      };
+      */
    input_quest_kas.oninput = function () {
        string_map.set('kas',input_quest_kas.value);
    };
@@ -845,8 +845,7 @@ function sendMessToServer(mes) {
          "Fill all answers !!!!!");
          return;
        }
-   }
-
+    }
  function createJson(trCmd, mes = null){
    const timeSinc = new Date();
    const jsonTxt = { cmd:trCmd, 
@@ -867,12 +866,12 @@ function sendMessToServer(mes) {
    }
    jsonObj = JSON.stringify(jsonTxt);
    return jsonObj;
- }
+  }
 
  function displayResult(offs){
 
    let displArray = [...arrayRotate(offs)];
-  // console.log('displayResult ' + ' ' + offs + ' ' + displArray.length);
+   // console.log('displayResult ' + ' ' + offs + ' ' + displArray.length);
 
    if(offs > displArray.length-1){
      offs = 0;
@@ -884,9 +883,9 @@ function sendMessToServer(mes) {
    displArray[offset][3] + "<br>"+
    displArray[offset][4] + "<br>"+
    displArray[offset][5] ;
-  // console.log(str);
+   // console.log(str);
    label_result.innerHTML = str;  
- }
+  }
 
  function arrayRotate(offs){
    let step = offs;

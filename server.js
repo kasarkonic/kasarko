@@ -111,8 +111,15 @@ app.delete('/logout', function (req, response) {
     
     server.on('upgrade', function (req, socket, head) {
       console.log('Parsing session from request...', req.url);
+
+      console.log(head);
+      console.log(req.session.userId);
+      console.log(socket);
+      const strObj = JSON.parse(req.session);
+      console.log(strObj);
+
      // socket.on('error', onSocketError);
-/*
+      /*
       sessionParser(req, {}, () => {
         if (!req.session.userId) {
           socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
