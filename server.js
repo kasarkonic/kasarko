@@ -29,6 +29,7 @@ const sessionParser = session({
 app.use(express.static("public"));
 app.use(express.static(__dirname));
 app.use(sessionParser);
+app.use(express.json());
 
 // Create an HTTP server.
 //
@@ -112,11 +113,15 @@ app.delete('/logout', function (req, response) {
     server.on('upgrade', function (req, socket, head) {
       console.log('Parsing session from request...', req.url);
 
-      console.log(head);
-      console.log(req.session.userId);
-      console.log(socket);
+      //console.log(head);
+     // console.log(req.session.userId);
+      //console.log(socket);
       const strObj = JSON.parse(req.session);
-      console.log(strObj);
+      console.log(strObj.cmd);
+      console.log(strObj.teamName);
+       strObj = JSON.parse(req.socket.data);
+      console.log(strObj.cmd);
+      console.log(strObj.teamName);
 
      // socket.on('error', onSocketError);
       /*
@@ -174,6 +179,10 @@ wss.on('connection', function connection(ws,req) {
     }
     strObj.id = userId;
     strObj.time  = contime/1000;  //s
+
+    console.log('message cmd  ' + strObj.cmd);
+    console.log('message teamName ' + strObj.teamName);
+
 
     if(strObj.cmd == 'ANSWER'){
       strObj.message = 'ANSWER';

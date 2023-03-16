@@ -31,6 +31,7 @@ class FriendlyWebSocket {
     if (location.protocol === 'https:') {
       protocol = 'wss://';
     }
+    console.log("protocol = " + protocol);
     
     let url = this.url || (protocol + location.host + this.path);
     
@@ -59,6 +60,13 @@ class FriendlyWebSocket {
       this._emit('message', event.data);
       //setTimeout(() => this.connect(), 2000);
     });
+
+    this.socket.onerror = function(evt) {onError(evt);};
+
+    this.onError=function (evt){
+      console.log('Error: ' + evt.data);
+    }
+
     /*
     // Listen for messages
     this.socket.addEventListener("message", event => {
@@ -109,9 +117,24 @@ class FriendlyWebSocket {
  // }
    // onopen = () => conn.send("Message");
 
-   send(message) {
+   send(message, callback) {
+    console.log("s.send(message) " );
     this.waitForConnection(function () {
-      this.socket.send(message);
+
+      //////////////// test
+
+      const timeSinc = new Date();
+      const jsonTxt = { cmd:trCmd, 
+      id:null,
+      teamName:'111',
+      message:'1MMM',
+      time:timeSinc.getTime()};
+      jsonObj = JSON.stringify(jsonTxt);
+      //////////////// test
+      this.socket.send(jsonTxt);
+      this.socket.send(jsonObj);
+      console.log("s.send(mess,");
+      //this.socket.send(message);
         if (typeof callback !== 'undefined') {
           callback();
         }
@@ -119,11 +142,11 @@ class FriendlyWebSocket {
 
    }
 
+  }
 
-
-  waitForConnection = function (callback, interval) {
+    this.waitForConnection = function (callback, interval) {
     if (this.socket.readyState === 1) {
-        //callback();
+        callback();
     } else {
         var that = this;
         // optional: implement backoff for interval here
@@ -135,26 +158,4 @@ class FriendlyWebSocket {
 
 
 
-}
-
-/*
-this.send = function (message, callback) {
-  this.waitForConnection(function () {
-      ws.send(message);
-      if (typeof callback !== 'undefined') {
-        callback();
-      }
-  }, 1000);
-};
-
-this.waitForConnection = function (callback, interval) {
-  if (ws.readyState === 1) {
-      callback();
-  } else {
-      var that = this;
-      // optional: implement backoff for interval here
-      setTimeout(function () {
-          that.waitForConnection(callback, interval);
-      }, interval);
-  }
-};*/
+//}

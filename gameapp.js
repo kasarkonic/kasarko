@@ -146,11 +146,18 @@
   });
 
   s.on("open", data => {
-    console.log("websocket connection open");
+    console.log("s.websocket connection open");
     try {
       // this example expects every message to be in JSON format.
-    //  data = JSON.parse(event.data);
-      showMessage('websocket connection open');
+      //data = JSON.parse(event.data);
+      //showMessage('s websocket connection open');
+
+
+     // AAAA
+      s.send(createJson('TEAMNAME'));
+      s.send(createJson('TEAMNAME'));
+
+      console.log("connection open:->");
     } catch (e) {
       console.warn("invalid message from server", data);
     }
@@ -708,7 +715,8 @@
 */
 function sendMessToServer(mes) {
   if (s) {
-    showMessage('WebSocket connect' + s + ' ' + s.connected);
+    showMessage('sendMessToServer');
+    //showMessage('WebSocket connect' + s + ' ' + s.connected);
     s.send(mes);     
   }
   else{
@@ -864,6 +872,10 @@ function sendMessToServer(mes) {
      console.log('trCmd == LOG  ' + jsonTxt.teamName);
      jsonTxt.teamName = '';
    }
+
+   console.log('cmd = ' + jsonTxt.cmd);
+   console.log('teamName =  ' + jsonTxt.teamName);
+
    jsonObj = JSON.stringify(jsonTxt);
    return jsonObj;
   }
