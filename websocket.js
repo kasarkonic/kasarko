@@ -18,8 +18,41 @@ class FriendlyWebSocket {
     };
   }
 
+  createWebSocketOld(){
+    console.log("s.createWebSocket");
+    this.connect();
+    this.connected = true;
+  }
+    /////////////////////////////////////////////////////////////
+   createWebSocket(){
+  const protocol = window.location.protocol.includes('https') ? 'wss': 'ws'
 
-    createWebSocket(){
+  console.log('protocol:  '+ protocol + '  ,  ' );
+
+  fetch('/login', { method: 'POST', credentials: 'same-origin' })
+  .then(this.handleResponse)
+  .then( this.connect())   // connection
+  .catch(function (err) {
+    this.showMessage(err.message);
+  });
+  }
+
+ handleResponse(response) {
+  let resid = response.data.id;
+  console.log('response.data.id '+ ' ' + resid);  
+  let id = response.id;
+  console.log('response.id '+ ' ' + id );
+  return response.ok
+  ? response.json().then((data) => JSON.stringify(data, null, 2))
+  : Promise.reject(new Error('Unexpected response'));
+ }
+
+
+
+
+
+//////////////////////////////////////////////////////////////
+    createWebSocketOld(){
       console.log("s.createWebSocket");
       this.connect();
       this.connected = true;
@@ -37,9 +70,17 @@ class FriendlyWebSocket {
     
     this.socket = new WebSocket(url);
 
+   // this.ws = new WebSocket(url, {
+   //   headers: {
+   //       "user-agent": "Mozilla"
+  //    }
+   // });
+
+
+
     // Connection opened
     this.socket.addEventListener("open", event => {
-      console.log("s.connected!");
+      console.log("s.connected!   "+ url);
       this.connected = true;
       this._emit('open', event.data);
       // this isn't necessary, but it's polite to say hi!
@@ -117,45 +158,57 @@ class FriendlyWebSocket {
  // }
    // onopen = () => conn.send("Message");
 
-   send(message, callback) {
+   send(message) {
     console.log("s.send(message) " );
     this.waitForConnection(function () {
 
       //////////////// test
+      let text = '{ "employees" : [{ "id":null , "teamName":"111", "message":"1MMM" } ]}';
+      const ojsonObjbj = JSON.parse(text);
+
+
+
+
+
 
       const timeSinc = new Date();
-      const jsonTxt = { cmd:trCmd, 
+      const jsonTxt = { cmd:'trCmd', 
       id:null,
       teamName:'111',
       message:'1MMM',
       time:timeSinc.getTime()};
-      jsonObj = JSON.stringify(jsonTxt);
+     // let jsonObj = JSON.stringify(jsonTxt);
       //////////////// test
-      this.socket.send(jsonTxt);
-      this.socket.send(jsonObj);
+     // this.socket.send(jsonTxt);
+     // this.socket.send(jsonObj);
+      this.socket.send('jsonObj');
       console.log("s.send(mess,");
       //this.socket.send(message);
         if (typeof callback !== 'undefined') {
-          callback();
+          //callback();
         }
     }, 100);
 
-   }
-
   }
 
-    this.waitForConnection = function (callback, interval) {
-    if (this.socket.readyState === 1) {
-        callback();
-    } else {
-        var that = this;
-        // optional: implement backoff for interval here
-        setTimeout(function () {
-            that.waitForConnection(callback, interval);
-        }, interval);
-    }
-  };
+
+//https://stackoverflow.com/questions/36846515/multiple-websocket-in-one-html-javascript
+waitForConnection(callback, interval) {
+
+  // if (this.socket.readyState === 1) {
+     if (this.connected) {
+
+       callback();
+   } else {
+       var that = this;
+     console.log(this.socket.readyState);
+       // optional: implement backoff for interval here
+       setTimeout(
+           this.waitForConnection(callback, interval)
+       , 1000);
+   }
+ }
 
 
 
-//}
+}

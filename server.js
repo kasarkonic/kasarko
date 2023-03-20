@@ -110,18 +110,27 @@ app.delete('/logout', function (req, response) {
   });
 });
     
-    server.on('upgrade', function (req, socket, head) {
+    server.on('upgrade', function (req, socket, head,message) {
       console.log('Parsing session from request...', req.url);
+      console.log( message);
+
+      try {
+        // this example expects every message to be in JSON format.
+        data = JSON.parse(message);
+      } catch (e) {
+        console.warn("invalid message from server", data);
+      }
+      console.log( data.cmd);
 
       //console.log(head);
      // console.log(req.session.userId);
       //console.log(socket);
-      const strObj = JSON.parse(req.session);
-      console.log(strObj.cmd);
-      console.log(strObj.teamName);
-       strObj = JSON.parse(req.socket.data);
-      console.log(strObj.cmd);
-      console.log(strObj.teamName);
+    //  const strObj = JSON.parse(message);
+     // console.log(strObj.cmd);
+     // console.log(strObj.teamName);
+     //  strObj = JSON.parse(req.socket.data);
+     // console.log(strObj.cmd);
+     // console.log(strObj.teamName);
 
      // socket.on('error', onSocketError);
       /*

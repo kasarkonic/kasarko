@@ -155,7 +155,6 @@
 
      // AAAA
       s.send(createJson('TEAMNAME'));
-      s.send(createJson('TEAMNAME'));
 
       console.log("connection open:->");
     } catch (e) {
