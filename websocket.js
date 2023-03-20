@@ -187,13 +187,13 @@ class FriendlyWebSocket {
         if (typeof callback !== 'undefined') {
           //callback();
         }
-    }, 100);
+    }, 1000);
 
   }
 
 
 //https://stackoverflow.com/questions/36846515/multiple-websocket-in-one-html-javascript
-waitForConnection(callback, interval) {
+waitForConnection1(callback, interval) {
 
   // if (this.socket.readyState === 1) {
      if (this.connected) {
@@ -204,7 +204,7 @@ waitForConnection(callback, interval) {
      console.log(this.socket.readyState);
        // optional: implement backoff for interval here
        setTimeout(
-           this.waitForConnection(callback, interval)
+           this.waitForConnection1(callback, interval)
        , 1000);
    }
  }
