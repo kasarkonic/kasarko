@@ -120,12 +120,12 @@ app.delete('/logout', function (req, response) {
       } catch (e) {
         console.warn("invalid message from server", data);
       }
-      console.log( data.cmd);
+      console.log( data);
 
       //console.log(head);
      // console.log(req.session.userId);
       //console.log(socket);
-    //  const strObj = JSON.parse(message);
+     //  const strObj = JSON.parse(message);
      // console.log(strObj.cmd);
      // console.log(strObj.teamName);
      //  strObj = JSON.parse(req.socket.data);
@@ -153,10 +153,10 @@ app.delete('/logout', function (req, response) {
 
 
 
-wss.on('connection', function connection(ws,req) {
-  const userId = req.headers['sec-websocket-key']; 
-  console.log(' WSS.connection ', userId );
-  sockets.add(ws);
+  wss.on('connection', function connection(ws,req) {
+    const userId = req.headers['sec-websocket-key']; 
+    console.log(' WSS.connection ', userId );
+    sockets.add(ws);
 
   /*
   const userId = setInterval(function () {
@@ -168,9 +168,7 @@ wss.on('connection', function connection(ws,req) {
   }, 1000);
   */
  
-
   map.set(userId, ws);
- 
   console.log(' add sockets.size', sockets.size,map.size);
 
 
@@ -178,6 +176,7 @@ wss.on('connection', function connection(ws,req) {
     const userId = req.headers['sec-websocket-key']; 
     console.log("-------------------- New message --------------------");
     console.log(`Received message -->${message}<--`);
+    console.log(message);
     const strObj = JSON.parse(message);
     let messageLength = Object.keys(strObj).length;
     let contime  = new Date();
