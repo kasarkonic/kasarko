@@ -218,7 +218,7 @@ function createJson(Cmd, mes = null) {// // status   empty-> 'E'||'F' <- fill
     obj.team_name = nodeTeamName;
     obj.player = playerNo.toString();
     obj.message = '';
-    obj.status = 'M'; // status
+    obj.status = 'N'; // status
     obj.time = parseInt(timeSinc.getTime() / 2000);
     Fplayercnt = 0;
     newGame();
