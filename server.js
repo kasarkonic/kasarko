@@ -1,4 +1,5 @@
 //A maximum length of 52 characters  !!!!!!!!!!!!!!!
+// install for vercel  in terminal:     npm i -g vercel
 
 
 var playerNo; // global
@@ -185,6 +186,17 @@ app.post('/?', function (req, res) {
   //   res.send({ result: 'OK'});// if 
   // }
   // else{
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    // another common pattern
+    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
+
+
   res.send({ result: 'OK', team_name: tem, playerNo: playerNo, playercnt: playercnt, Fplayercnt: Fplayercnt });
   console.log('result: OK, playerNo:', playerNo, 'playercnt:', playercnt, 'Fplayercnt:', Fplayercnt);
   //  }
@@ -201,19 +213,16 @@ app.get(/team/, function (req, res) {
   team = team.substring(6);
   console.log('team ===>>>', team);
 
-  //team = 'aaa'; // for testing  
-
-  //console.log('createResultJson(team)   ', createResultJson(team).length);
-  //console.log(createResultJson(team));
-  //console.log('---0000---');
-  //console.log(createResultJson(team)[1]);
-  //console.log('1111');
-  //res.send(createResultJson(team));
-
-  //let txt = {"d_team_name":"aaa","d_kas":"1","d_kad":"1","d_ar_ko":"1","d_kur":"1","d_ko_dara":"1","d_kapec":"1","d_message":null,"d_status":"F","d_time":1682229758}{"d_team_name":"aaa","d_kas":"2","d_kad":"2","d_ar_ko":"2","d_kur":"2","d_ko_dara":"2","d_kapec":"2","d_message":null,"d_status":"F","d_time":1682229770}
-
-
-  //res.send(createResultJson(team)[1]);
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  )
+  
 
   res.json(createResultJson(team));
   //res.json(createTMPJson());

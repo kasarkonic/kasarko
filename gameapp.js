@@ -57,8 +57,13 @@ let teamimgArray = new Array();   // id,ststus,x,y
 const winWidth = window.innerWidth;
 const winHeight = window.innerHeight;
 
-// const url = '127.0.0.1:5500'; ????
-const url = '';
+ //const url = 'https://kasarko.vercel.app/';// ????
+ const url = 'https://kasarko.lv/';// ????
+
+//kasarko.vercel.app
+//const url = 'kasarko-marisdirveiks-gmailcom.vercel.app';
+//  kasarko-btaiqm8ar-marisdirveiks-gmailcom.vercel.app    ????
+
 let myInterval1 = setInterval(intervalFunction, 10);
 let myInterval = setInterval(sTime, 100);
 
