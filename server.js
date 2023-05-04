@@ -188,6 +188,7 @@ app.post('/?', function (req, res) {
       'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
     )
   res.send({ result: 'OK', team_name: tem, playerNo: playerNo, playercnt: playercnt, Fplayercnt: Fplayercnt });
+  res.status(200).end();
   console.log('result: OK, playerNo:', playerNo, 'playercnt:', playercnt, 'Fplayercnt:', Fplayercnt);
   //  }
   //console.log(dataMap);
