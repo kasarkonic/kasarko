@@ -1,21 +1,17 @@
 {
-   "version": 2,
-   "name": "kas_ar_ko",
-   "public": true,
-   "builds": [
-      { "src": "server.js", "use": "@vercel/node" }
-   ],
-   "routes": [
-      { "src": "/(.*)", "dest": "/server.js" }
-   ],
-     "headers": [
+  "version": 2,
+  "build": {
+    "src": "api/server.js",
+    "use": "@vercel/node"
+},
+  "headers": [
     {
-      "source": "/api/(.*)",
+      "source": "/server.js",
       "headers": [
-        { "key": "Access-Control-Allow-Credentials", "value": "true" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=1, stale-while-revalidate=59"
+        }
       ]
     }
   ]
