@@ -58,8 +58,8 @@ const winWidth = window.innerWidth;
 const winHeight = window.innerHeight;
 
  //const url = 'https://kasarko.vercel.app/';// ????
- const url = 'https://kasarko.lv/';// ????
-
+ //const url = 'https://kasarko.lv/';// ????
+ const url = '';// ????
 //kasarko.vercel.app
 //const url = 'kasarko-marisdirveiks-gmailcom.vercel.app';
 //  kasarko-btaiqm8ar-marisdirveiks-gmailcom.vercel.app    ????
