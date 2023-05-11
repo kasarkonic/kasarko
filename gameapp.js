@@ -94,7 +94,11 @@ async function postJSON(data) {
     const response = await fetch(url, {
       method: "POST", // or 'PUT'
       headers: {
-        'Content-Type': "application/json; charset=UTF-8"
+        'Content-Type': "application/json; charset=UTF-8",
+         "key": "Access-Control-Allow-Credentials", "value": "true" ,
+         "key": "Access-Control-Allow-Origin", "value": "*" ,
+         "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" ,
+         "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" 
       },
       // body: JSON.stringify({ "id": 78912 })
       body: JSON.stringify(data)

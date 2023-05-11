@@ -17,7 +17,6 @@ const { listenerCount } = require('events');
 const express = require('express');
 const session = require("express-session");
 const http = require('http');
-//const uuid = require('uuid');
 const app = express();
 
 
@@ -178,8 +177,6 @@ app.post('/?', function (req, res) {
   if ((playerNo > 0) && (jsonTxt.status === 'N')) {  // syncro
     setFeelPlayersCnt(tem, 0);
   }
-
-
     res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
