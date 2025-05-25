@@ -57,12 +57,9 @@ let teamimgArray = new Array();   // id,ststus,x,y
 const winWidth = window.innerWidth;
 const winHeight = window.innerHeight;
 
- //const url = 'https://kasarko.vercel.app/';// ????
- //const url = 'https://kasarko.lv/';// ????
  const url = '';// ????
 //kasarko.vercel.app
-//const url = 'kasarko-marisdirveiks-gmailcom.vercel.app';
-//  kasarko-btaiqm8ar-marisdirveiks-gmailcom.vercel.app    ????
+
 
 let myInterval1 = setInterval(intervalFunction, 10);
 let myInterval = setInterval(sTime, 100);
@@ -85,23 +82,61 @@ function updateTeamStatus() {
 
 
 
+
+
+
+// Sending and receiving data in JSON format using POST method
+//
+
+function postJSON(data){
+var xhr = new XMLHttpRequest();
+//var url = "url";
+console.log('sendMyjson->');
+xhr.open("POST", url, true);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.responseType = "json";
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        console.log(json.email + ", " + json.password);
+    }
+};
+xhr.send(data);
+}
+
+
 //xhr.onload = () =>{commStatus = true;};
 //???  Access-Control-Allow-Origin: *
-async function postJSON(data) {
-  //console.log('data: json->', data);
-
+async function postJSON_Old(data) {
+  console.log('post data: json->', data);
   try {
     const response = await fetch(url, {
       method: "POST", // or 'PUT'
       headers: {
-        'Content-Type': "application/json; charset=UTF-8",
+       "Content-Type":"application/json",
+       "X-Powered-By":"bacon",
+       //"Accept": "JSON",
+       //"Accept": "plain text",
+       // "Content-Type": "application/json; charset=UTF-8",
+        // ???Content-Security-Policy: default-src https:; report-to /csp-violation-report-endpoint/
+        //'Content-Security-Policy': "default-src https:", // report-to /csp-violation-report-endpoint/
+
+         "bodySignature":"x-vercel-signature",
+         "Authorization": "Bearer <TOKEN>",
+         "x-artifact-client-ci": "VERCEL",
+         "x-artifact-client-interactive": 0,
          "key": "Access-Control-Allow-Credentials", "value": "true" ,
          "key": "Access-Control-Allow-Origin", "value": "*" ,
-         "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" ,
+         "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT",
          "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" 
       },
-      // body: JSON.stringify({ "id": 78912 })
-      body: JSON.stringify(data)
+       //body: JSON.stringify({ "id": 78912 })  // for testing
+      //body: JSON.stringify(data)
+      body: data
+     // res.setHeader(
+     //   'Access-Control-Allow-Headers',
+     //   'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+      //)
     })
       .then(response => response.json())
     playerNo = parseInt(response.playerNo);
@@ -135,6 +170,8 @@ async function postJSON(data) {
 
     //.then(response => console.log(JSON.stringify(response)))
   }
+
+  
   //const result = await response.json();
   //console.log("Success:", result);
   catch (error) {
@@ -142,7 +179,7 @@ async function postJSON(data) {
   }
   // const result = await response.json();
   //  console.log("Success:", result);
-
+  
 };
 
 async function getData(team) {
@@ -188,9 +225,12 @@ function initPage() {
 //var dArray = new Array('team_name','player','quest_kas','quest_kad','quest_ar_ko',
 //'quest_kur','quest_ko_dara','quest_kapec',message,status,time); 
 
-function createJson(Cmd, mes = null) {// // status   empty-> 'E'||'F' <- fill
+function createJson(Cmd, mes = null) { // status   empty-> 'E'||'F' <- fill
   var obj = new Object();
   const timeSinc = new Date();
+  if(mes == null){
+    mes = '';
+  }
   //console.log('createJson', Cmd);
 
   if (Cmd === 'Team') {   // Team || Answer
@@ -204,7 +244,7 @@ function createJson(Cmd, mes = null) {// // status   empty-> 'E'||'F' <- fill
 
   }
   if (Cmd === 'Answer' || Cmd === 'Team') {
-    obj.team_name = input_team_name.value;
+    obj.team_name = input_team_name.value;    // for testing only
     obj.player = playerNo.toString();
     obj.quest_kas = input_quest_kas.value;
     obj.quest_kad = input_quest_kad.value;
@@ -221,23 +261,25 @@ function createJson(Cmd, mes = null) {// // status   empty-> 'E'||'F' <- fill
     obj.player = playerNo.toString();
     obj.message = '';
     obj.status = 'S'; // status
-    obj.time = parseInt(timeSinc.getTime() / 2000);
+    obj.time = parseInt(timeSinc.getTime() / 2000).toString();;
   }
   if (Cmd === 'NEW') {
     obj.team_name = nodeTeamName;
     obj.player = playerNo.toString();
     obj.message = '';
     obj.status = 'N'; // status
-    obj.time = parseInt(timeSinc.getTime() / 2000);
+    obj.time = parseInt(timeSinc.getTime() / 2000).toString();;
     Fplayercnt = 0;
     newGame();
   }
 
 
   var jsonString = JSON.stringify(obj);
-  console.log(Cmd + '  jsonString ', jsonString);
+  console.log('Cmd=' + Cmd + '  jsonString ', jsonString);
   const jsonObj = JSON.parse(jsonString);
-  return jsonObj;
+  //return jsonObj;// for testing only
+  return jsonString;// for testing only
+  //return obj;
 }
 
 function newGame() {
@@ -719,7 +761,7 @@ function newGame() {
     input_quest_kapec.value = '';
 
     //sendMessToServer(createJson('NEW'));
-    postJSON(createJson('NEW'), mess = null);
+    postJSON(createJson('NEW', mess = null));
 
     showInputTable(true);
     GETreq = 5000;  // enable GET request 1000ms

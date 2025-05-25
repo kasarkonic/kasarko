@@ -1,6 +1,8 @@
 //A maximum length of 52 characters  !!!!!!!!!!!!!!!
 // install for vercel  in terminal:     npm i -g vercel
 
+// PS E:\SVN\git\kasarko>  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser  
+
 
 var playerNo; // global
 var teamNo; // global
@@ -98,6 +100,7 @@ app.all("*", function (req, res, next) {  // runs on ALL requests
   req.fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
   console.log('app.all("*") ', req.fullUrl);
   //console.log('req.originalUrl ', req.originalUrl);
+  res.redirect(303, '/confirmOrder')  // for testing   ??????????????????????
   next();
 });
 
@@ -124,14 +127,17 @@ app.post('/?', function (req, res) {
   let playerNo = 0;
   let Fplayercnt = 0;
   //let record = 0;
-  //console.log('receive POST: '+'Nr:' + pln + ' tem  ' + tem + '  stat ' + stat);
+  console.log('receive POST: '+'Nr:' + pln + ' tem  ' + tem + '  stat ' + stat);
   const jsonTxt = req.body;
 
- // console.log(jsonTxt);
+  console.log(jsonTxt);
   let pln = parseInt(jsonTxt.player);   // record
   let tem = jsonTxt.team_name;  // team name
   let stat = jsonTxt.status // status E,F,S
   console.log('receive POST: ' + 'Nr:' + pln + ' tem  ' + tem + '  stat ' + stat);
+
+  res.redirect(303, '/confirmOrder')  // for testing
+ 
 
   if (pln == 0) { // new player, receive team name
     console.log('1. player Nr:' + pln);
@@ -184,6 +190,7 @@ app.post('/?', function (req, res) {
       'Access-Control-Allow-Headers',
       'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
     )
+  res.redirect(303, '/confirmOrder')   // for testing
   res.send({ result: 'OK', team_name: tem, playerNo: playerNo, playercnt: playercnt, Fplayercnt: Fplayercnt });
   res.status(200).end();
   console.log('result: OK, playerNo:', playerNo, 'playercnt:', playercnt, 'Fplayercnt:', Fplayercnt);
@@ -249,6 +256,24 @@ server.on('upgrade', function (req, socket, head, message) {
   }
   console.log(data);
 });
+
+server.on('end', function () {
+  if (!verifySignature(req, body)) {
+    res.statusCode = 403;
+    res.end("signature didn't match");
+    return;
+  }
+  res.end('ok');
+});
+
+function verifySignature(req, body) {
+  const signature = crypto
+    .createHmac('sha1', process.env.OAUTH2_SECRET)
+    .update(body)
+    .digest('hex');
+  return signature === req.headers['x-vercel-signature'];
+}
+
 
 function createTMPJson() {
   var obj = new Object();
